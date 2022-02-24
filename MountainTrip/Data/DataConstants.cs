@@ -3,8 +3,7 @@
     public class DataConstants
     {
         // Trip
-        public const int TripNameMaxLength = 50;
-        public const int TripDescriptionMaxLength = 5000;
+        public const int TripNameMaxLength = 50;        
 
         // Mountain
         public const int MountainNameMaxLength = 20;

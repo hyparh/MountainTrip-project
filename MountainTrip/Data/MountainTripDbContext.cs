@@ -14,5 +14,16 @@ namespace MountainTrip.Data
         public DbSet<Trip> Trips { get; init; }
 
         public DbSet<Mountain> Mountains { get; init; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Trip>()
+                   .HasOne(m => m.Mountain)
+                   .WithMany(t => t.Trips)
+                   .HasForeignKey(m => m.MountainId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(builder);
+        }
     }
 }

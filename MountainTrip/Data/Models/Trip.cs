@@ -21,7 +21,7 @@ namespace MountainTrip.Data.Models
         
         public TimeSpan Duration { get; set; }
 
-        public Enum Difficulty { get; set; }
+        public Difficulty Difficulty { get; set; }
 
         [Required]
         public string ImageUrl { get; set; }

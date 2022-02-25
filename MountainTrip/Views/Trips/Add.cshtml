@@ -1,0 +1,28 @@
+﻿@model AddTripFormModel
+
+@{
+    ViewData["Title"] = "Add Trip";
+}
+
+<form method="post">
+    <div class="mb-3">
+      <label asp-for="Name" class="form-label"></label>
+      <input asp-for="Name" class="form-control" placeholder="Vitosha, Rila etc...">
+    </div>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Select mountain
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="#">Vitosha</a></li>
+        <li><a class="dropdown-item" href="#">Pirin</a></li>
+        <li><a class="dropdown-item" href="#">Rila</a></li>
+        <li><a class="dropdown-item" href="#">Rodopi</a></li>
+        <li><a class="dropdown-item" href="#">Stara planina</a></li>
+      </ul>
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+</form>

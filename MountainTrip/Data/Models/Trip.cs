@@ -23,7 +23,7 @@ namespace MountainTrip.Data.Models
 
         public Difficulty Difficulty { get; set; }
 
-        [Required]
+        [Required]       
         public string ImageUrl { get; set; }
 
         [ForeignKey(nameof(Mountain))]

@@ -4,33 +4,47 @@
     ViewData["Title"] = "Add Trip";
 }
 
-<form method="post">
-    <div class="mb-3">
-      <label asp-for="Name" class="form-label"></label>
-      <input asp-for="Name" class="form-control" placeholder="Boyana church-Boyana waterfall...">
+<div class="row">
+    <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-6">
+
+        <h2 class="text-center margin-header">Add Trip</h2>
+
+        <form method="post">
+            <div class="mb-3">
+              <label asp-for="Name" class="form-label"></label>
+              <input asp-for="Name" class="form-control" placeholder="Boyana Church-Boyana Waterfall, Aleko-Black Peak...">
+            </div>
+            <div class="mb-3">
+              <label asp-for="Description" class="form-label"></label>
+              <textarea asp-for="Description" rows="4" class="form-control" placeholder="Description of the trip..."></textarea>
+            </div>
+            <div class="mb-3">
+              <label asp-for="Duration" class="form-label"></label>
+              <input asp-for="Duration" class="form-control" placeholder="Enter trip duration...">
+            </div>
+            <div class="mb-3">
+              <label asp-for="Difficulty" class="form-label"></label>
+              <input asp-for="Difficulty" class="form-control" placeholder="Easy, Medium, Hard...">
+            </div>
+            <div class="mb-3">
+              <label asp-for="ImageUrl" class="form-label"></label>
+              <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL here...">
+            </div>
+            <div class="dropdown">              
+              <label asp-for="MountainId"></label>
+              <select asp-for="MountainId" class=form-control>
+                  @foreach(var mountain in Model.Mountains)
+                    {
+                        <option value="@mountain.Id">@mountain.Name</option>
+                    }
+              </select>
+
+              <div class="d-grid d-md-block save-button">
+                <button class="btn btn-primary" type="button">Save</button>                  
+              </div>
+
+            </div>    
+        </form>
     </div>
-    <div class="mb-3">
-      <label asp-for="Description" class="form-label"></label>
-      <textarea asp-for="Description" class="form-control" placeholder="Description of the trip..."></textarea>
-    </div>
-    <div class="mb-3">
-      <label asp-for="Duration" class="form-label"></label>
-      <input asp-for="Duration" class="form-control" placeholder="Duration of the trip...">
-    </div>
-    <div class="mb-3">
-      <label asp-for="Difficulty" class="form-label"></label>
-      <input asp-for="Difficulty" class="form-control" placeholder="Easy, Medium, Hard...">
-    </div>
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-        Select mountain
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li><a class="dropdown-item" href="#">Vitosha</a></li>
-        <li><a class="dropdown-item" href="#">Pirin</a></li>
-        <li><a class="dropdown-item" href="#">Rila</a></li>
-        <li><a class="dropdown-item" href="#">Rodopi</a></li>
-        <li><a class="dropdown-item" href="#">Stara planina</a></li>
-      </ul>
-    </div>    
-</form>
+</div>
+

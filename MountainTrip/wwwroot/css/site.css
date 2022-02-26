@@ -16,3 +16,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.margin-header {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.save-button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

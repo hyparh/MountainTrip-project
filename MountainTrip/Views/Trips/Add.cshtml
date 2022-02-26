@@ -7,7 +7,19 @@
 <form method="post">
     <div class="mb-3">
       <label asp-for="Name" class="form-label"></label>
-      <input asp-for="Name" class="form-control" placeholder="Vitosha, Rila etc...">
+      <input asp-for="Name" class="form-control" placeholder="Boyana church-Boyana waterfall...">
+    </div>
+    <div class="mb-3">
+      <label asp-for="Description" class="form-label"></label>
+      <textarea asp-for="Description" class="form-control" placeholder="Description of the trip..."></textarea>
+    </div>
+    <div class="mb-3">
+      <label asp-for="Duration" class="form-label"></label>
+      <input asp-for="Duration" class="form-control" placeholder="Duration of the trip...">
+    </div>
+    <div class="mb-3">
+      <label asp-for="Difficulty" class="form-label"></label>
+      <input asp-for="Difficulty" class="form-control" placeholder="Easy, Medium, Hard...">
     </div>
     <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -20,9 +32,5 @@
         <li><a class="dropdown-item" href="#">Rodopi</a></li>
         <li><a class="dropdown-item" href="#">Stara planina</a></li>
       </ul>
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
+    </div>    
 </form>

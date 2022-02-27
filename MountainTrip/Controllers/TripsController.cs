@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
+using MountainTrip.Data.Models;
 using MountainTrip.Models.Trips;
 
 namespace MountainTrip.Controllers
@@ -17,10 +18,36 @@ namespace MountainTrip.Controllers
         });
 
         // model binding
+
         [HttpPost]
         public IActionResult Add(AddTripFormModel trip)
         {
-            return View();
+            if (!data.Mountains.Any(m => m.Id == trip.MountainId))
+            {
+                ModelState.AddModelError(nameof(trip.MountainId), "Mointain does not exist.");
+            }
+
+            //ModelState.IsValid indicates if it was possible to bind the incoming values from the request to the
+            //model correctly and whether any explicitly specified validation rules were broken during the model
+            //binding process.
+
+            if (!ModelState.IsValid)
+            {
+                trip.Mountains = this.GetTripMountains();
+
+                return View(trip);
+            }
+            
+            var tripData = new Trip 
+            {
+                Name = trip.Name,
+                Description = trip.Description,
+                Length = trip.Length,
+                Difficulty = trip.Difficulty,
+                Duration = trip.Duration
+            };
+
+            return RedirectToAction("Index", "Home");
         }
 
         private IEnumerable<TripMountainViewModel> GetTripMountains()

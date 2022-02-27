@@ -13,22 +13,27 @@
             <div class="mb-3">
               <label asp-for="Name" class="form-label"></label>
               <input asp-for="Name" class="form-control" placeholder="Boyana Church-Boyana Waterfall, Aleko-Black Peak...">
+              <span asp-validation-for="Name" class="small text-danger"> </span>
             </div>
             <div class="mb-3">
               <label asp-for="Description" class="form-label"></label>
               <textarea asp-for="Description" rows="4" class="form-control" placeholder="Description of the trip..."></textarea>
+              <span asp-validation-for="Description" class="small text-danger"> </span>
             </div>
             <div class="mb-3">
               <label asp-for="Duration" class="form-label"></label>
-              <input asp-for="Duration" class="form-control" placeholder="Enter trip duration...">
+              <input asp-for="Duration" class="form-control" placeholder="Enter trip duration...">  
+              <span asp-validation-for="Duration" class="small text-danger"> </span>
             </div>
             <div class="mb-3">
               <label asp-for="Difficulty" class="form-label"></label>
-              <input asp-for="Difficulty" class="form-control" placeholder="Easy, Medium, Hard...">
+              <input asp-for="Difficulty" class="form-control" placeholder="Easy, Medium, Hard...">  
+              <span asp-validation-for="Difficulty" class="small text-danger"> </span>
             </div>
             <div class="mb-3">
               <label asp-for="ImageUrl" class="form-label"></label>
               <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL here...">
+              <span asp-validation-for="ImageUrl" class="small text-danger"> </span>
             </div>
             <div class="dropdown">              
               <label asp-for="MountainId"></label>

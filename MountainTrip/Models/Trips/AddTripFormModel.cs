@@ -8,18 +8,22 @@ namespace MountainTrip.Models.Trips
     public class AddTripFormModel
     {
         [Required]
-        [MinLength(TripNameMinLength)]
-        [MaxLength(TripNameMaxLength)]
+        //here we can write custom error message like: ErrorMessage = "Maximum: {0}, {1} or {3}..."
+        [StringLength(TripNameMaxLength, MinimumLength = TripNameMinLength)]
         public string Name { get; init; }
 
-        [Required]
-        [MinLength(TripDescriptionMinLength)]
+        [Required]        
+        [StringLength(int.MaxValue, 
+            MinimumLength = TripDescriptionMinLength,            
+            ErrorMessage = "The field Description must be a string with a minimum length of {2}.")]
         public string Description { get; init; }
 
         public double Length { get; init; }
 
+        [Required]
         public string Duration { get; init; }
 
+        [Required]
         public string Difficulty { get; init; }
 
         [Required]

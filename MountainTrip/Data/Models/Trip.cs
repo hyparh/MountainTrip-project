@@ -18,10 +18,12 @@ namespace MountainTrip.Data.Models
         public string Description { get; set; }
 
         public double Length { get; set; }
-        
-        public TimeSpan Duration { get; set; }
 
-        public Difficulty Difficulty { get; set; }
+        [Required]
+        public string Duration { get; set; }
+
+        [Required]
+        public string Difficulty { get; set; }
 
         [Required]       
         public string ImageUrl { get; set; }

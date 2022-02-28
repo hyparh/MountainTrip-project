@@ -1,4 +1,4 @@
-﻿namespace MountainTrip.Views.Trips
+﻿namespace MountainTrip.Models.Trips
 {
     public class TripListingViewModel
     {
@@ -7,7 +7,7 @@
         public string Name { get; set; }
 
         public double Length { get; set; }
-        
+
         public string Duration { get; set; }
 
         public string Difficulty { get; set; }

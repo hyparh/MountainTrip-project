@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MountainTrip.Data
+﻿namespace MountainTrip.Data
 {      
     public enum DifficultyTypes
     {        

@@ -2,6 +2,7 @@
 using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Models.Trips;
+using MountainTrip.Views.Trips;
 using System.Globalization;
 
 namespace MountainTrip.Controllers
@@ -15,8 +16,26 @@ namespace MountainTrip.Controllers
 
         public IActionResult Add() => View(new AddTripFormModel 
         {
-            Mountains = this.GetTripMountains()
+            Mountains = GetTripMountains()
         });
+
+        public IActionResult All()
+        {
+            var trips = data.Trips
+                .OrderByDescending(t => t.Id)
+                .Select(t => new TripListingViewModel
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Difficulty = t.Difficulty.ToString(),
+                    Duration = t.Duration,
+                    ImageUrl = t.ImageUrl,
+                    Length = t.Length
+                })
+                .ToList();
+
+            return View(trips);
+        }
 
         // model binding
 
@@ -25,7 +44,7 @@ namespace MountainTrip.Controllers
         {
             if (!data.Mountains.Any(m => m.Id == trip.MountainId))
             {
-                ModelState.AddModelError(nameof(trip.MountainId), "Mointain does not exist.");
+                ModelState.AddModelError(nameof(trip.MountainId), "Mountain does not exist.");
             }
 
             //ModelState.IsValid indicates if it was possible to bind the incoming values from the request to the
@@ -34,14 +53,14 @@ namespace MountainTrip.Controllers
 
             if (!ModelState.IsValid)
             {
-                trip.Mountains = this.GetTripMountains();
+                trip.Mountains = GetTripMountains();
 
                 return View(trip);
             }
 
             bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
 
-            if (!IsDifficultyValid)
+            if (!IsDifficultyValid) //this is not necessary
             {
                 throw new ArgumentException("Difficulty is not valid.");
             }

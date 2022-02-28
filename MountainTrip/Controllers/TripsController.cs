@@ -2,6 +2,7 @@
 using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Models.Trips;
+using System.Globalization;
 
 namespace MountainTrip.Controllers
 {
@@ -37,13 +38,20 @@ namespace MountainTrip.Controllers
 
                 return View(trip);
             }
-            
+
+            bool IsDifficultyValid = Enum.TryParse(typeof(Difficulty), trip.Difficulty, out object difficulty);
+
+            if (!IsDifficultyValid)
+            {
+                throw new ArgumentException("Difficulty is not valid.");
+            }
+
             var tripData = new Trip 
             {
                 Name = trip.Name,
                 Description = trip.Description,
                 Length = trip.Length,
-                Difficulty = trip.Difficulty,
+                Difficulty = (Difficulty)difficulty,
                 Duration = trip.Duration
             };
 

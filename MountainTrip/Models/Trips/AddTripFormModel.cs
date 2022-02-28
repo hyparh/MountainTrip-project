@@ -21,9 +21,11 @@ namespace MountainTrip.Models.Trips
         public double Length { get; init; }
 
         [Required]
+        [RegularExpression(DurationRegex,
+            ErrorMessage = "Please enter time in the following format: 00h:00m")]
         public string Duration { get; init; }
 
-        [Required]
+        [Required]       
         public string Difficulty { get; init; }
 
         [Required]

@@ -22,7 +22,7 @@ namespace MountainTrip.Data.Models
         [Required]
         public string Duration { get; set; }
         
-        public Difficulty Difficulty { get; set; }
+        public DifficultyTypes Difficulty { get; set; }
 
         [Required]       
         public string ImageUrl { get; set; }

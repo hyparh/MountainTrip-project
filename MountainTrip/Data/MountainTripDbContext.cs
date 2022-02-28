@@ -22,7 +22,7 @@ namespace MountainTrip.Data
                    .WithMany(t => t.Trips)
                    .HasForeignKey(m => m.MountainId)
                    .OnDelete(DeleteBehavior.Restrict);
-
+           
             base.OnModelCreating(builder);
         }
     }

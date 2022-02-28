@@ -12,7 +12,7 @@ using MountainTrip.Data;
 namespace MountainTrip.Data.Migrations
 {
     [DbContext(typeof(MountainTripDbContext))]
-    [Migration("20220224101650_MountainTripTables")]
+    [Migration("20220228133553_MountainTripTables")]
     partial class MountainTripTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -259,8 +259,9 @@ namespace MountainTrip.Data.Migrations
                     b.Property<int>("Difficulty")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
+                    b.Property<string>("Duration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()

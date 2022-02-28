@@ -39,7 +39,7 @@ namespace MountainTrip.Controllers
                 return View(trip);
             }
 
-            bool IsDifficultyValid = Enum.TryParse(typeof(Difficulty), trip.Difficulty, out object difficulty);
+            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
 
             if (!IsDifficultyValid)
             {
@@ -47,13 +47,18 @@ namespace MountainTrip.Controllers
             }
 
             var tripData = new Trip 
-            {
+            {                
                 Name = trip.Name,
                 Description = trip.Description,
                 Length = trip.Length,
-                Difficulty = (Difficulty)difficulty,
-                Duration = trip.Duration
+                Difficulty = (DifficultyTypes)difficulty,
+                Duration = trip.Duration,
+                ImageUrl = trip.ImageUrl,
+                MountainId = trip.MountainId
             };
+
+            data.Trips.Add(tripData);
+            data.SaveChanges();
 
             return RedirectToAction("Index", "Home");
         }

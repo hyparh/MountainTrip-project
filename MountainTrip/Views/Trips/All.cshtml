@@ -1,13 +1,17 @@
 ﻿@model IEnumerable<TripListingViewModel>
 
-@foreach(var trip in Model)
-{
- <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+<div class="row">
+    @foreach(var trip in Model)
+    {
+        <div class="col-md-4">
+            <div class="card">
+              <img src="@trip.ImageUrl" class="card-img-top" alt="@trip.Name @trip.Difficulty - @trip.Duration @trip.Length">
+              <div class="card-body text-center">
+              <h5 class="card-title text-center">@trip.Name, @trip.Difficulty, @trip.Duration, @trip.Length</h5>           
+              <a asp-controller="Trips" asp-action="Details" asp-route-id="@trip.Id" class="btn btn-primary">View details</a>
+              </div>
+            </div>
+        </div>
+    }
 </div>
-}
+

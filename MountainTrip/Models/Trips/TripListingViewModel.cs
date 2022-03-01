@@ -4,14 +4,14 @@
     {
         public int Id { get; init; }
 
-        public string Name { get; set; }
+        public string Name { get; init; }
 
-        public double Length { get; set; }
+        public double Length { get; init; }
 
-        public string Duration { get; set; }
+        public string Duration { get; init; }
 
-        public string Difficulty { get; set; }
+        public string Difficulty { get; init; }
 
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; init; }
     }
 }

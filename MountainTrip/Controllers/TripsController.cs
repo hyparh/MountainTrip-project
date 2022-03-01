@@ -2,7 +2,6 @@
 using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Models.Trips;
-using MountainTrip.Views.Trips;
 using System.Globalization;
 
 namespace MountainTrip.Controllers
@@ -79,7 +78,7 @@ namespace MountainTrip.Controllers
             data.Trips.Add(tripData);
             data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
         }
 
         private IEnumerable<TripMountainViewModel> GetTripMountains()

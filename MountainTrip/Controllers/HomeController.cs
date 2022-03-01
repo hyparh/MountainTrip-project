@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
 using MountainTrip.Models;
-using MountainTrip.Models.Trips;
+using MountainTrip.Models.Home;
 
 namespace MountainTrip.Controllers
 {
@@ -15,9 +15,11 @@ namespace MountainTrip.Controllers
 
         public IActionResult Index()
         {
+            var totalTrips = data.Trips.Count();
+
             var trips = data.Trips
                 .OrderByDescending(t => t.Id)
-                .Select(t => new TripListingViewModel
+                .Select(t => new TripIndexViewModel
                 {
                     Id = t.Id,
                     Name = t.Name,
@@ -29,7 +31,11 @@ namespace MountainTrip.Controllers
                 .Take(3)
                 .ToList();
 
-            return View(trips);
+            return View(new IndexViewModel 
+            {
+                TotalTrips = totalTrips,
+                Trips = trips
+            });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

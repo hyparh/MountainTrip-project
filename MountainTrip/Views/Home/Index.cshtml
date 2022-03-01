@@ -1,16 +1,17 @@
-﻿@model List<TripListingViewModel>
+﻿@model IndexViewModel
 
 @{
     ViewData["Title"] = "Bulgarian mountains";
 }
 
 @{
-    var firstTrip = Model.Any() ? Model[0] : null;
-    var secondTrip = Model.Count > 1 ? Model[1] : null;
-    var thirdTrip = Model.Count > 2 ? Model[2] : null;
+    var trips = Model.Trips;
+    var firstTrip = trips.Any() ? trips[0] : null;
+    var secondTrip = trips.Count > 1 ? trips[1] : null;
+    var thirdTrip = trips.Count > 2 ? trips[2] : null;
 }
 
-@if (!Model.Any())
+@if (!trips.Any())
 {
     <div class="card" style="width: 18rem;">
       <img src="..." class="card-img-top" alt="...">
@@ -63,4 +64,18 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
+</div>
+
+<div class="mt-4 p-5 bg-primary text-white rounded">
+    <div class="row">
+        <h3 class="col-md-4 text-center">
+            @Model.TotalTrips Trips
+        </h3>
+        <h3 class="col-md-4 text-center">
+            @Model.TotalUsers Users
+        </h3>
+        <h3 class="col-md-4 text-center">
+            @Model.TotalBookings Bookings
+        </h3>
+    </div>
 </div>

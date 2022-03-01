@@ -2,7 +2,6 @@
 using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Models.Trips;
-using System.Globalization;
 
 namespace MountainTrip.Controllers
 {

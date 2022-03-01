@@ -17,9 +17,19 @@ namespace MountainTrip.Controllers
             Mountains = GetTripMountains()
         });
 
-        public IActionResult All()
+        public IActionResult All(string searching)
         {
-            var trips = data.Trips
+            var tripsQuery = data.Trips.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searching))
+            {
+                tripsQuery = tripsQuery.Where(t => 
+                    t.Name.Contains(searching, StringComparison.OrdinalIgnoreCase) || 
+                    t.Duration.Contains(searching, StringComparison.OrdinalIgnoreCase) || 
+                    t.Description.Contains(searching, StringComparison.OrdinalIgnoreCase));
+            }
+
+            var trips = tripsQuery
                 .OrderByDescending(t => t.Id)
                 .Select(t => new TripListingViewModel
                 {
@@ -32,7 +42,11 @@ namespace MountainTrip.Controllers
                 })
                 .ToList();
 
-            return View(trips);
+            return View(new AllTripsQueryModel 
+            {
+                Trips = trips,
+                Searching = searching
+            });
         }
 
         // model binding

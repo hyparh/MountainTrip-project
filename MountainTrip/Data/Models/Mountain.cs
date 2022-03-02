@@ -2,7 +2,7 @@
 
 namespace MountainTrip.Data.Models
 {
-    using static DataConstants;
+    using static DataConstants.Mountain;
 
     public class Mountain
     {
@@ -10,7 +10,7 @@ namespace MountainTrip.Data.Models
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(MountainNameMaxLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         public IEnumerable<Trip> Trips { get; init; } = new HashSet<Trip>();

@@ -2,18 +2,28 @@
 {
     public class DataConstants
     {
-        // Trip
-        public const int TripNameMinLength = 5;        
-        public const int TripNameMaxLength = 50;        
-        public const int TripDescriptionMinLength = 10;        
-        public const string DurationRegex = "^[0-9]{2}[h]:[0-9]{2}[m]$";
+        public class Trip 
+        {
+            public const int NameMinLength = 5;
+            public const int NameMaxLength = 50;
+            public const int DescriptionMinLength = 10;
+            public const string DurationRegex = "^[0-9]{2}[h]:[0-9]{2}[m]$";
 
-        public const string EasyDifficulty = "Easy";
-        public const string MediumDifficulty = "Medium";
-        public const string HardDifficulty = "Hard";
-        public const string ExtremeDifficulty = "Extreme";
+            public const string EasyDifficulty = "Easy";
+            public const string MediumDifficulty = "Medium";
+            public const string HardDifficulty = "Hard";
+            public const string ExtremeDifficulty = "Extreme";
+        }
 
-        // Mountain
-        public const int MountainNameMaxLength = 20;
+        public class Mountain 
+        {
+            public const int NameMaxLength = 20;
+        }
+
+        public class Guide 
+        {
+            public const int FullNameMaxLength = 50;
+            public const int PhoneNumberMaxLength = 30;
+        }                     
     }
 }

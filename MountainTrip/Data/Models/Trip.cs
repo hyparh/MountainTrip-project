@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MountainTrip.Data.Models
 {
-    using static DataConstants;
+    using static DataConstants.Trip;
 
     public class Trip
     {        
@@ -11,7 +11,7 @@ namespace MountainTrip.Data.Models
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(TripNameMaxLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         [Required]
@@ -30,5 +30,9 @@ namespace MountainTrip.Data.Models
         [ForeignKey(nameof(Mountain))]
         public int MountainId { get; set; }
         public Mountain Mountain { get; init; }
+
+        [ForeignKey(nameof(Guide))]
+        public int GuideId { get; init; }
+        public Guide Guide { get; init; }
     }
 }

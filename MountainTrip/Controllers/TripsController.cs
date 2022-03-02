@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
+using MountainTrip.Data.Enums;
 using MountainTrip.Data.Models;
 using MountainTrip.Models.Trips;
 
@@ -17,20 +18,31 @@ namespace MountainTrip.Controllers
             Mountains = GetTripMountains()
         });
 
-        public IActionResult All(string searching)
+        public IActionResult All([FromQuery]AllTripsQueryModel query)
         {
             var tripsQuery = data.Trips.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(searching))
+            if (!string.IsNullOrWhiteSpace(query.Name))
             {
-                tripsQuery = tripsQuery.Where(t => 
-                    t.Name.Contains(searching, StringComparison.OrdinalIgnoreCase) || 
-                    t.Duration.Contains(searching, StringComparison.OrdinalIgnoreCase) || 
-                    t.Description.Contains(searching, StringComparison.OrdinalIgnoreCase));
+                tripsQuery = tripsQuery.Where(t => t.Name == query.Name);
             }
 
-            var trips = tripsQuery
-                .OrderByDescending(t => t.Id)
+            if (!string.IsNullOrWhiteSpace(query.Searching))
+            {
+                tripsQuery = tripsQuery.Where(t => 
+                    t.Name.ToLower().Contains(query.Searching.ToLower()) || 
+                    t.Duration.ToLower().Contains(query.Searching.ToLower()) || 
+                    t.Description.ToLower().Contains(query.Searching.ToLower()));
+            }
+
+            tripsQuery = query.Sorting switch
+            {
+                TripSorting.TripDuration => tripsQuery.OrderByDescending(t => t.Duration),
+                TripSorting.TripDifficulty => tripsQuery.OrderByDescending(t => t.Difficulty),
+                TripSorting.TripName or _ => tripsQuery.OrderByDescending(t => t.Id)          
+            };
+
+            var trips = tripsQuery                
                 .Select(t => new TripListingViewModel
                 {
                     Id = t.Id,
@@ -42,11 +54,16 @@ namespace MountainTrip.Controllers
                 })
                 .ToList();
 
-            return View(new AllTripsQueryModel 
-            {
-                Trips = trips,
-                Searching = searching
-            });
+            var tripNames = data.Trips
+                .Select(t => t.Name)               
+                .Distinct()
+                .OrderBy(n => n)
+                .ToList();
+
+            query.Names = tripNames;
+            query.Trips = trips;
+
+            return View(query);
         }
 
         // model binding

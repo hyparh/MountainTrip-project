@@ -5,13 +5,15 @@ namespace MountainTrip.Models.Trips
 {
     public class AllTripsQueryModel
     {
-        public IEnumerable<string> Names { get; init; }
+        public string Name { get; init; }
 
-        [Display(Name = "Search")]
+        public IEnumerable<string> Names { get; set; }
+
+        [Display(Name = "Search trip by name:")]
         public string Searching { get; init; }
 
         public TripSorting Sorting { get; init; }
 
-        public IEnumerable<TripListingViewModel> Trips { get; init; }
+        public IEnumerable<TripListingViewModel> Trips { get; set; }
     }
 }

@@ -42,7 +42,11 @@ namespace MountainTrip.Controllers
                 TripSorting.TripName or _ => tripsQuery.OrderByDescending(t => t.Id)          
             };
 
-            var trips = tripsQuery                
+            var totalTrips = tripsQuery.Count();
+
+            var trips = tripsQuery     
+                .Skip((query.CurrentPage - 1) * AllTripsQueryModel.TripsPerPage)
+                .Take(AllTripsQueryModel.TripsPerPage)
                 .Select(t => new TripListingViewModel
                 {
                     Id = t.Id,
@@ -60,6 +64,7 @@ namespace MountainTrip.Controllers
                 .OrderBy(n => n)
                 .ToList();
 
+            query.TotalTrips = totalTrips;
             query.Names = tripNames;
             query.Trips = trips;
 

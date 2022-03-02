@@ -5,14 +5,20 @@ namespace MountainTrip.Models.Trips
 {
     public class AllTripsQueryModel
     {
-        public string Name { get; init; }
+        public const int TripsPerPage = 3;
 
-        public IEnumerable<string> Names { get; set; }
+        public string Name { get; init; }        
 
         [Display(Name = "Search trip by name:")]
         public string Searching { get; init; }
 
         public TripSorting Sorting { get; init; }
+
+        public int CurrentPage { get; init; } = 1;
+
+        public int TotalTrips { get; set; }
+
+        public IEnumerable<string> Names { get; set; }
 
         public IEnumerable<TripListingViewModel> Trips { get; set; }
     }

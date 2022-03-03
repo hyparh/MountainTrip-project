@@ -41,7 +41,6 @@
 
     </div>
     <input type="submit" class="btn btn-primary d-done mb-5" value="Search">
-</form>
 
 <div class="row">
     @foreach(var trip in Model.Trips)
@@ -57,6 +56,14 @@
         </div>   
     }
 </div>
+</form>
+
+@{
+    if (!Model.Trips.Any())
+    {
+        <h2 class="text-center">No trips found.</h2>
+    }
+}
 
 @{
     var previousPage = Model.CurrentPage - 1;

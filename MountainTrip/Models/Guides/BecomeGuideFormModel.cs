@@ -14,7 +14,7 @@ namespace MountainTrip.Models.Guides
         [Required]
         [StringLength(PhoneNumberMaxLength, MinimumLength = PhoneNumberMinLength)]
         [Display(Name = "Phone Number")]
-        [RegularExpression("")]
+        // may add regex validation here
         public string PhoneNumber { get; set; }
     }
 }

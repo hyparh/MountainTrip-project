@@ -74,7 +74,7 @@ namespace MountainTrip.Controllers
             if (!UserIsGuide())
             {               
                 return RedirectToAction(nameof(GuidesController.Create), "Guides");
-            }
+            }          
 
             return View(new AddTripFormModel
             {
@@ -140,7 +140,7 @@ namespace MountainTrip.Controllers
         }
 
         private bool UserIsGuide()
-            => !data.Guides.Any(g => g.UserId == User.GetId());
+            => data.Guides.Any(g => g.UserId == User.GetId());
 
         private IEnumerable<TripMountainViewModel> GetTripMountains()
             => data.Mountains

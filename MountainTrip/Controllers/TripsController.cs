@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
 using MountainTrip.Data.Enums;
 using MountainTrip.Data.Models;
+using MountainTrip.Infrastructure;
 using MountainTrip.Models.Trips;
 
 namespace MountainTrip.Controllers
@@ -13,12 +15,7 @@ namespace MountainTrip.Controllers
         public TripsController(MountainTripDbContext data) 
             => this.data = data;
 
-        public IActionResult Add() => View(new AddTripFormModel 
-        {
-            Mountains = GetTripMountains()
-        });
-
-        public IActionResult All([FromQuery]AllTripsQueryModel query)
+        public IActionResult All([FromQuery] AllTripsQueryModel query)
         {
             var tripsQuery = data.Trips.AsQueryable();
 
@@ -29,9 +26,9 @@ namespace MountainTrip.Controllers
 
             if (!string.IsNullOrWhiteSpace(query.Searching))
             {
-                tripsQuery = tripsQuery.Where(t => 
-                    t.Name.ToLower().Contains(query.Searching.ToLower()) || 
-                    t.Duration.ToLower().Contains(query.Searching.ToLower()) || 
+                tripsQuery = tripsQuery.Where(t =>
+                    t.Name.ToLower().Contains(query.Searching.ToLower()) ||
+                    t.Duration.ToLower().Contains(query.Searching.ToLower()) ||
                     t.Description.ToLower().Contains(query.Searching.ToLower()));
             }
 
@@ -39,12 +36,12 @@ namespace MountainTrip.Controllers
             {
                 TripSorting.TripDuration => tripsQuery.OrderByDescending(t => t.Duration),
                 TripSorting.TripDifficulty => tripsQuery.OrderByDescending(t => t.Difficulty),
-                TripSorting.TripName or _ => tripsQuery.OrderByDescending(t => t.Id)          
+                TripSorting.TripName or _ => tripsQuery.OrderByDescending(t => t.Id)
             };
 
             var totalTrips = tripsQuery.Count();
 
-            var trips = tripsQuery     
+            var trips = tripsQuery
                 .Skip((query.CurrentPage - 1) * AllTripsQueryModel.TripsPerPage)
                 .Take(AllTripsQueryModel.TripsPerPage)
                 .Select(t => new TripListingViewModel
@@ -59,7 +56,7 @@ namespace MountainTrip.Controllers
                 .ToList();
 
             var tripNames = data.Trips
-                .Select(t => t.Name)               
+                .Select(t => t.Name)
                 .Distinct()
                 .OrderBy(n => n)
                 .ToList();
@@ -71,11 +68,36 @@ namespace MountainTrip.Controllers
             return View(query);
         }
 
+        [Authorize]
+        public IActionResult Add()
+        {
+            if (!UserIsGuide())
+            {               
+                return RedirectToAction(nameof(GuidesController.Create), "Guides");
+            }
+
+            return View(new AddTripFormModel
+            {
+                Mountains = GetTripMountains()
+            });
+        }
+        
         // model binding
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddTripFormModel trip)
         {
+            var guideId = data.Guides
+                .Where(g => g.UserId == User.GetId())
+                .Select(g => g.Id)
+                .FirstOrDefault();
+
+            if (guideId == 0)
+            {
+                return RedirectToAction(nameof(GuidesController.Create), "Guides");
+            }
+
             if (!data.Mountains.Any(m => m.Id == trip.MountainId))
             {
                 ModelState.AddModelError(nameof(trip.MountainId), "Mountain does not exist.");
@@ -107,7 +129,8 @@ namespace MountainTrip.Controllers
                 Difficulty = (DifficultyTypes)difficulty,
                 Duration = trip.Duration,
                 ImageUrl = trip.ImageUrl,
-                MountainId = trip.MountainId
+                MountainId = trip.MountainId,
+                GuideId = guideId
             };
 
             data.Trips.Add(tripData);
@@ -115,6 +138,9 @@ namespace MountainTrip.Controllers
 
             return RedirectToAction(nameof(All));
         }
+
+        private bool UserIsGuide()
+            => !data.Guides.Any(g => g.UserId == User.GetId());
 
         private IEnumerable<TripMountainViewModel> GetTripMountains()
             => data.Mountains

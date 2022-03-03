@@ -1,0 +1,28 @@
+﻿@model BecomeGuideFormModel
+
+@{
+    ViewBag.Title = "Become Guide";
+}
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-6">
+
+        <h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
+
+        <form method="post">
+            <div class="mb-3">
+              <label asp-for="FullName" class="form-label"></label>
+              <input asp-for="FullName" class="form-control" placeholder="Boyana Church-Boyana Waterfall, Aleko-Black Peak...">
+              <span asp-validation-for="FullName" class="small text-danger"> </span>
+            </div>
+            <div class="mb-3">
+              <label asp-for="PhoneNumber" class="form-label"></label>
+              <textarea asp-for="PhoneNumber" rows="4" class="form-control" placeholder="Description of the trip..."></textarea>
+              <span asp-validation-for="PhoneNumber" class="small text-danger"> </span>
+            </div>
+            
+               <button class="btn btn-primary" type="submit">Save</button>                                                
+        </form>
+    </div>
+</div>
+

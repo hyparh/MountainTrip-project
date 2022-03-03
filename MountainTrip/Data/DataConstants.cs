@@ -22,7 +22,9 @@
 
         public class Guide 
         {
+            public const int FullNameMinLength = 3;
             public const int FullNameMaxLength = 50;
+            public const int PhoneNumberMinLength = 5;
             public const int PhoneNumberMaxLength = 30;
         }                     
     }

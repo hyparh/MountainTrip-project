@@ -1,6 +1,6 @@
-﻿namespace MountainTrip.Models.Api.Trips
+﻿namespace MountainTrip.Services.Trips
 {
-    public class AllTripsApiResponseModel
+    public class TripQueryServiceModel
     {
         public int CurrentPage { get; init; }
 
@@ -9,6 +9,6 @@
         public int TotalTrips { get; init; }
 
 
-        public IEnumerable<TripResponseModel> Trips { get; init; }
+        public IEnumerable<TripServiceModel> Trips { get; init; }
     }
 }

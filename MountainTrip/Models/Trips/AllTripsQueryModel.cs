@@ -1,4 +1,5 @@
 ﻿using MountainTrip.Data.Enums;
+using MountainTrip.Services.Trips;
 using System.ComponentModel.DataAnnotations;
 
 namespace MountainTrip.Models.Trips
@@ -20,6 +21,6 @@ namespace MountainTrip.Models.Trips
 
         public IEnumerable<string> Names { get; set; }
 
-        public IEnumerable<TripListingViewModel> Trips { get; set; }
+        public IEnumerable<TripServiceModel> Trips { get; set; }
     }
 }

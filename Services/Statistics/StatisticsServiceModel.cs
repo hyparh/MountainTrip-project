@@ -1,6 +1,6 @@
-﻿namespace MountainTrip.Models.Api.Statistics
+﻿namespace Services.Statistics
 {
-    public class StatisticsResponseModel
+    public class StatisticsServiceModel
     {
         public int TotalTrips { get; init; }
 

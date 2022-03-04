@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MountainTrip.Data;
 using MountainTrip.Infrastructure;
+using MountainTrip.Services.Trips;
+using Services.Statistics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +21,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
         options.Password.RequireUppercase = false;       
     })
     .AddEntityFrameworkStores<MountainTripDbContext>();
+
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+builder.Services.AddTransient<ITripService, TripService>();
 
 var app = builder.Build();
 

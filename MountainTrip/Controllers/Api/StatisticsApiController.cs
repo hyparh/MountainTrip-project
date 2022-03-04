@@ -1,6 +1,5 @@
-﻿using MountainTrip.Data;
-using Microsoft.AspNetCore.Mvc;
-using MountainTrip.Models.Api.Statistics;
+﻿using Microsoft.AspNetCore.Mvc;
+using Services.Statistics;
 
 namespace MountainTrip.Controllers.Api
 {
@@ -8,25 +7,13 @@ namespace MountainTrip.Controllers.Api
     [Route("api/statistics")]
     public class StatisticsApiController : ControllerBase
     {
-        private readonly MountainTripDbContext data;
+        private readonly IStatisticsService statistics;
 
-        public StatisticsApiController(MountainTripDbContext data)
-            => this.data = data;
+        public StatisticsApiController(IStatisticsService statistics)
+            => this.statistics = statistics;
 
         [HttpGet]        
-        public StatisticsResponseModel GetStatistics()
-        {
-            var totalTrips = data.Trips.Count();
-            var totalUsers = data.Users.Count();
-
-            var statistics = new StatisticsResponseModel
-            {
-                TotalTrips = totalTrips,
-                TotalUsers = totalUsers,
-                TotalBookings = 0
-            };
-
-            return statistics;
-        }
+        public StatisticsServiceModel GetStatistics()
+            => statistics.Total();
     }
 }

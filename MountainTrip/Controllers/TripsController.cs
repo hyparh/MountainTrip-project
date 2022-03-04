@@ -1,69 +1,38 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
-using MountainTrip.Data.Enums;
 using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
 using MountainTrip.Models.Trips;
+using MountainTrip.Services.Trips;
 
 namespace MountainTrip.Controllers
 {
     public class TripsController : Controller
     {
+        private readonly ITripService trips;       
         private readonly MountainTripDbContext data;
 
-        public TripsController(MountainTripDbContext data) 
-            => this.data = data;
+        public TripsController(ITripService trips, MountainTripDbContext data)
+        {
+            this.data = data;
+            this.trips = trips;
+        }
 
         public IActionResult All([FromQuery] AllTripsQueryModel query)
         {
-            var tripsQuery = data.Trips.AsQueryable();
+            var queryResult = trips.All(
+                query.Name,
+                query.Searching,
+                query.Sorting,
+                query.CurrentPage,
+                AllTripsQueryModel.TripsPerPage);
 
-            if (!string.IsNullOrWhiteSpace(query.Name))
-            {
-                tripsQuery = tripsQuery.Where(t => t.Name == query.Name);
-            }
+            var tripNames = trips.AllTripNames();
 
-            if (!string.IsNullOrWhiteSpace(query.Searching))
-            {
-                tripsQuery = tripsQuery.Where(t =>
-                    t.Name.ToLower().Contains(query.Searching.ToLower()) ||
-                    t.Duration.ToLower().Contains(query.Searching.ToLower()) ||
-                    t.Description.ToLower().Contains(query.Searching.ToLower()));
-            }
-
-            tripsQuery = query.Sorting switch
-            {
-                TripSorting.TripDuration => tripsQuery.OrderByDescending(t => t.Duration),
-                TripSorting.TripDifficulty => tripsQuery.OrderByDescending(t => t.Difficulty),
-                TripSorting.TripName or _ => tripsQuery.OrderByDescending(t => t.Id)
-            };
-
-            var totalTrips = tripsQuery.Count();
-
-            var trips = tripsQuery
-                .Skip((query.CurrentPage - 1) * AllTripsQueryModel.TripsPerPage)
-                .Take(AllTripsQueryModel.TripsPerPage)
-                .Select(t => new TripListingViewModel
-                {
-                    Id = t.Id,
-                    Name = t.Name,
-                    Difficulty = t.Difficulty.ToString(),
-                    Duration = t.Duration,
-                    ImageUrl = t.ImageUrl,
-                    Length = t.Length
-                })
-                .ToList();
-
-            var tripNames = data.Trips
-                .Select(t => t.Name)
-                .Distinct()
-                .OrderBy(n => n)
-                .ToList();
-
-            query.TotalTrips = totalTrips;
+            query.TotalTrips = queryResult.TotalTrips;
             query.Names = tripNames;
-            query.Trips = trips;
+            query.Trips = queryResult.Trips;
 
             return View(query);
         }

@@ -12,8 +12,6 @@ namespace MountainTrip.Models.Api.Trips
 
         public int CurrentPage { get; init; } = 1;
 
-        public int TripsPerPage { get; init; } = 10;
-
-        public int TotalTrips { get; init; }
+        public int TripsPerPage { get; init; } = 10;        
     }
 }

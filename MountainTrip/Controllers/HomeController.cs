@@ -3,15 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
 using MountainTrip.Models;
 using MountainTrip.Models.Home;
+using Services.Statistics;
 
 namespace MountainTrip.Controllers
 {
     public class HomeController : Controller
     {
         private readonly MountainTripDbContext data;
+        private readonly IStatisticsService statistics;
 
-        public HomeController(MountainTripDbContext data)
-            => this.data = data;
+        public HomeController(
+            IStatisticsService statistics,
+            MountainTripDbContext data)
+        {
+            this.data = data;
+            this.statistics = statistics;
+        }
 
         public IActionResult Index()
         {
@@ -32,10 +39,12 @@ namespace MountainTrip.Controllers
                 .Take(3)
                 .ToList();
 
+            var totalStatistics = statistics.Total();
+
             return View(new IndexViewModel 
             {
-                TotalTrips = totalTrips,
-                TotalUsers = totalUsers,
+                TotalTrips = totalStatistics.TotalTrips,
+                TotalUsers = totalStatistics.TotalUsers,
                 Trips = trips
             });
         }

@@ -79,3 +79,34 @@
         </h3>
     </div>
 </div>
+
+@*modifications for visualizing the statistics via JS. It's AJAX request*@
+
+@*<div class="row">
+    <div class="col-12 text-center">
+        <button class="btn btn-primary" id="statistics-button">Show statistics</button>
+    </div>    
+</div>
+
+<div class="mt-4 p-5 bg-primary text-white rounded d-none" id="statistics">
+    <div class="row">
+        <h3 class="col-md-4 text-center" id="total-trips">Trips</h3>
+        <h3 class="col-md-4 text-center" id="total-users"></h3>
+        <h3 class="col-md-4 text-center" id="total-bookings"></h3>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $('#statistics-button').on('click', ev => {
+            $.get('/api/statistics', (data) => {
+                $('#total-trips').text(data.TotalTrips + " Trips");
+                $('#total-users').text(data.TotalUsers + " Users");
+                $('#total-bookings').text(data.TotalBookings + " Bookings");
+
+                $('#statistics').removeClass('d-none');
+                $('#statistics-button').hide();
+            });
+        });      
+    </script>
+    }*@

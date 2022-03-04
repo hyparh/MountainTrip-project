@@ -17,4 +17,12 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Statistics\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MountainTrip\MountainTrip.csproj" />
+  </ItemGroup>
+
 </Project>

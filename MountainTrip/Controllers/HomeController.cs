@@ -16,6 +16,7 @@ namespace MountainTrip.Controllers
         public IActionResult Index()
         {
             var totalTrips = data.Trips.Count();
+            var totalUsers = data.Users.Count();
 
             var trips = data.Trips
                 .OrderByDescending(t => t.Id)
@@ -34,6 +35,7 @@ namespace MountainTrip.Controllers
             return View(new IndexViewModel 
             {
                 TotalTrips = totalTrips,
+                TotalUsers = totalUsers,
                 Trips = trips
             });
         }

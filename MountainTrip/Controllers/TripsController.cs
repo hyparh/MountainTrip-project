@@ -54,7 +54,7 @@ namespace MountainTrip.Controllers
         // model binding
 
         [HttpPost]
-        [Authorize]
+        [Authorize]        
         public IActionResult Add(AddTripFormModel trip)
         {
             var guideId = data.Guides

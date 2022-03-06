@@ -1,13 +1,28 @@
 ﻿@using Microsoft.AspNetCore.Identity
+
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IGuideService Guides
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="" asp-controller="Guides" asp-action="Create">Become Guide</a>
-    </li>
+    var userId = User.GetId();
+    var userIsGuide = Guides.IsGuide(userId);
+
+    @if (userIsGuide)
+    {
+        <li class="nav-item">
+            <a  class="nav-link text-dark" asp-area="" asp-controller="Trips" asp-action="Mine">My Trips</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a  class="nav-link text-dark" asp-area="" asp-controller="Guides" asp-action="Create">Become Guide</a>
+        </li>
+    }
+
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
     </li>    

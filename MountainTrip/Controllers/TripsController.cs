@@ -38,6 +38,14 @@ namespace MountainTrip.Controllers
         }
 
         [Authorize]
+        public IActionResult Mine()
+        {
+            var myTrips = trips.ByUser(User.GetId());
+
+            return View(myTrips);
+        }
+
+        [Authorize]
         public IActionResult Add()
         {
             if (!UserIsGuide())

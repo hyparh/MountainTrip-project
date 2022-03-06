@@ -42,20 +42,7 @@
     </div>
     <input type="submit" class="btn btn-primary d-done mb-5" value="Search">
 
-<div class="row">
-    @foreach(var trip in Model.Trips)
-    {
-        <div class="col-md-4">
-            <div class="card mb-4">
-              <img src="@trip.ImageUrl" class="card-img-top" alt="@trip.Name @trip.Difficulty - @trip.Duration @trip.Length">
-              <div class="card-body text-center">
-              <h5 class="card-title text-center">@trip.Name, @trip.Difficulty, @trip.Duration, @trip.Length</h5>           
-              <a asp-controller="Trips" asp-action="Details" asp-route-id="@trip.Id" class="btn btn-primary">View details</a>
-              </div>
-            </div>
-        </div>   
-    }
-</div>
+<partial name="_TripsPartial" model="@Model.Trips" />
 </form>
 
 @{

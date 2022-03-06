@@ -1,5 +1,6 @@
 ﻿using MountainTrip.Data;
 using MountainTrip.Data.Enums;
+using MountainTrip.Data.Models;
 
 namespace MountainTrip.Services.Trips
 {
@@ -41,19 +42,9 @@ namespace MountainTrip.Services.Trips
 
             var totalTrips = tripsQuery.Count();
 
-            var trips = tripsQuery
+            var trips = GetTrips(tripsQuery
                 .Skip((currentPage - 1) * tripsPerPage)
-                .Take(tripsPerPage)
-                .Select(t => new TripServiceModel
-                {
-                    Id = t.Id,
-                    Name = t.Name,
-                    Difficulty = t.Difficulty.ToString(),
-                    Duration = t.Duration,
-                    ImageUrl = t.ImageUrl,
-                    Length = t.Length
-                })
-                .ToList();
+                .Take(tripsPerPage));
 
             return new TripQueryServiceModel
             {
@@ -64,11 +55,28 @@ namespace MountainTrip.Services.Trips
             };
         }
 
+        public IEnumerable<TripServiceModel> ByUser(string userId)
+            => GetTrips(data.Trips
+                .Where(t => t.Guide.UserId == userId));
+
         public IEnumerable<string> AllTripNames()
             => data.Trips
                 .Select(t => t.Name)
                 .Distinct()
                 .OrderBy(n => n)
-                .ToList();
+                .ToList();   
+        
+        private static IEnumerable<TripServiceModel> GetTrips(IQueryable<Trip> tripQuery)
+            => tripQuery
+            .Select(t => new TripServiceModel
+            {
+                Id = t.Id,
+                Name = t.Name,
+                Difficulty = t.Difficulty.ToString(),
+                Duration = t.Duration,
+                ImageUrl = t.ImageUrl,
+                Length = t.Length
+            })
+            .ToList();
     }
 }

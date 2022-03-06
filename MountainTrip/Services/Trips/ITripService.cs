@@ -11,6 +11,8 @@ namespace MountainTrip.Services.Trips
             int currentPage,
             int tripsPerPage);
 
+        IEnumerable<TripServiceModel> ByUser(string userId);
+
         IEnumerable<string> AllTripNames();
     }
 }

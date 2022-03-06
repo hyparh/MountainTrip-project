@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MountainTrip.Data;
 using MountainTrip.Infrastructure;
+using MountainTrip.Services.Guides;
 using MountainTrip.Services.Trips;
 using Services.Statistics;
 
@@ -28,8 +29,9 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 
-builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<ITripService, TripService>();
+builder.Services.AddTransient<IGuideService, GuideService>();
+builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 
 var app = builder.Build();
 

@@ -1,7 +1,7 @@
 ﻿using MountainTrip.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace MountainTrip.Models.Trips
+namespace MountainTrip.Services.Trips
 {
     using static DataConstants.Trip;
 
@@ -38,6 +38,6 @@ namespace MountainTrip.Models.Trips
         public int MountainId { get; init; }
 
         //mountains which we want to visualize in the view
-        public IEnumerable<TripMountainViewModel> Mountains { get; set; }
+        public IEnumerable<TripMountainServiceModel> Mountains { get; set; }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace MountainTrip.Models.Trips
+﻿namespace MountainTrip.Services.Trips
 {
-    public class TripMountainViewModel
+    public class TripMountainServiceModel
     {        
         public int Id { get; init; }
         

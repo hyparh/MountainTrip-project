@@ -3,20 +3,23 @@ using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
-using MountainTrip.Models.Trips;
+using MountainTrip.Services.Trips;
+using MountainTrip.Services.Guides;
 using MountainTrip.Services.Trips;
 
 namespace MountainTrip.Controllers
 {
     public class TripsController : Controller
     {
-        private readonly ITripService trips;       
+        private readonly ITripService trips;
+        private readonly IGuideService guides;
         private readonly MountainTripDbContext data;
 
-        public TripsController(ITripService trips, MountainTripDbContext data)
+        public TripsController(ITripService trips, MountainTripDbContext data, IGuideService guides)
         {
             this.data = data;
             this.trips = trips;
+            this.guides = guides;
         }
 
         public IActionResult All([FromQuery] AllTripsQueryModel query)
@@ -28,7 +31,7 @@ namespace MountainTrip.Controllers
                 query.CurrentPage,
                 AllTripsQueryModel.TripsPerPage);
 
-            var tripNames = trips.AllTripNames();
+            var tripNames = trips.AllNames();
 
             query.TotalTrips = queryResult.TotalTrips;
             query.Names = tripNames;
@@ -48,14 +51,14 @@ namespace MountainTrip.Controllers
         [Authorize]
         public IActionResult Add()
         {
-            if (!UserIsGuide())
+            if (!guides.IsGuide(User.GetId()))
             {               
                 return RedirectToAction(nameof(GuidesController.Create), "Guides");
-            }          
+            }
 
             return View(new AddTripFormModel
             {
-                Mountains = GetTripMountains()
+                Mountains = trips.AllMountains()
             });
         }
         
@@ -86,7 +89,7 @@ namespace MountainTrip.Controllers
 
             if (!ModelState.IsValid)
             {
-                trip.Mountains = GetTripMountains();
+                trip.Mountains = trips.AllMountains();
 
                 return View(trip);
             }
@@ -114,18 +117,6 @@ namespace MountainTrip.Controllers
             data.SaveChanges();
 
             return RedirectToAction(nameof(All));
-        }
-
-        private bool UserIsGuide()
-            => data.Guides.Any(g => g.UserId == User.GetId());
-
-        private IEnumerable<TripMountainViewModel> GetTripMountains()
-            => data.Mountains
-               .Select(m => new TripMountainViewModel
-               {
-                   Id = m.Id,
-                   Name = m.Name
-               })
-               .ToList();
+        }   
     }
 }

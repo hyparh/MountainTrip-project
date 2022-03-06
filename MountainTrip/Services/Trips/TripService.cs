@@ -59,13 +59,22 @@ namespace MountainTrip.Services.Trips
             => GetTrips(data.Trips
                 .Where(t => t.Guide.UserId == userId));
 
-        public IEnumerable<string> AllTripNames()
+        public IEnumerable<string> AllNames()
             => data.Trips
                 .Select(t => t.Name)
                 .Distinct()
                 .OrderBy(n => n)
-                .ToList();   
-        
+                .ToList();
+
+        public IEnumerable<TripMountainServiceModel> AllMountains()
+           => data.Mountains
+              .Select(m => new TripMountainServiceModel
+              {
+                  Id = m.Id,
+                  Name = m.Name
+              })
+              .ToList();
+
         private static IEnumerable<TripServiceModel> GetTrips(IQueryable<Trip> tripQuery)
             => tripQuery
             .Select(t => new TripServiceModel
@@ -77,6 +86,6 @@ namespace MountainTrip.Services.Trips
                 ImageUrl = t.ImageUrl,
                 Length = t.Length
             })
-            .ToList();
+            .ToList();      
     }
 }

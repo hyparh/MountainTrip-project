@@ -1,6 +1,6 @@
 ﻿using MountainTrip.Data.Enums;
 
-namespace MountainTrip.Models.Api.Trips
+namespace MountainTrip.Services.Api.Trips
 {
     public class AllTripsApiRequestModel
     {

@@ -1,7 +1,7 @@
 ﻿using MountainTrip.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace MountainTrip.Models.Guides
+namespace MountainTrip.Services.Guides
 {
     using static DataConstants.Guide;
 

@@ -13,6 +13,8 @@ namespace MountainTrip.Services.Trips
 
         IEnumerable<TripServiceModel> ByUser(string userId);
 
-        IEnumerable<string> AllTripNames();
+        IEnumerable<string> AllNames();
+
+        IEnumerable<TripMountainServiceModel> AllMountains();        
     }
 }

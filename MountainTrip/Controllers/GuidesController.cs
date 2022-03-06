@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
-using MountainTrip.Models.Guides;
+using MountainTrip.Services.Guides;
 
 namespace MountainTrip.Controllers
 {    

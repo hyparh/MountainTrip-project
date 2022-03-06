@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MountainTrip.Models.Api.Trips;
+using MountainTrip.Services.Api.Trips;
 using MountainTrip.Services.Trips;
 
 namespace MountainTrip.Controllers.Api

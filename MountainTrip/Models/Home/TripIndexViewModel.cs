@@ -1,4 +1,4 @@
-﻿namespace MountainTrip.Models.Home
+﻿namespace MountainTrip.Services.Home
 {
     public class TripIndexViewModel
     {

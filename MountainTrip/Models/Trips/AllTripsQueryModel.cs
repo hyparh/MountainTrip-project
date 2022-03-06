@@ -2,7 +2,7 @@
 using MountainTrip.Services.Trips;
 using System.ComponentModel.DataAnnotations;
 
-namespace MountainTrip.Models.Trips
+namespace MountainTrip.Services.Trips
 {
     public class AllTripsQueryModel
     {

@@ -1,4 +1,4 @@
-namespace MountainTrip.Models
+namespace MountainTrip.Services
 {
     public class ErrorViewModel
     {

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
-using MountainTrip.Models;
-using MountainTrip.Models.Home;
+using MountainTrip.Services;
+using MountainTrip.Services.Home;
 using Services.Statistics;
 
 namespace MountainTrip.Controllers

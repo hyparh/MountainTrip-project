@@ -88,7 +88,7 @@ namespace MountainTrip.Services.Trips
 
             if (!IsDifficultyValid) //TODO: this probably is not necessary
             {
-                throw new ArgumentException("Difficulty is not valid.");
+                throw new InvalidDataException("Please select difficulty.");
             }
 
             var tripData = new Trip
@@ -124,7 +124,7 @@ namespace MountainTrip.Services.Trips
 
             if (!IsDifficultyValid) //TODO: this probably is not necessary
             {
-                throw new ArgumentException("Difficulty is not valid.");
+                throw new InvalidDataException("Please select difficulty.");
             }
 
             var tripData = data.Trips.Find(id);
@@ -185,7 +185,7 @@ namespace MountainTrip.Services.Trips
                 Duration = t.Duration,
                 ImageUrl = t.ImageUrl,
                 Length = t.Length,
-                MountainName = t.Mountain.Name // TODO: is this should be here?
+                MountainName = t.Mountain.Name
             })
             .ToList();        
     }

@@ -11,9 +11,7 @@ namespace MountainTrip.Services.Trips
             int currentPage,
             int tripsPerPage);
 
-        TripDetailsServiceModel Details(int id);
-
-        // TODO: next ones must be done to follow conventions
+        TripDetailsServiceModel Details(int id);        
 
         int Create(string name,
                 string description,

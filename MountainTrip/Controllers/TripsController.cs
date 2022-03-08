@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
-using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
 using MountainTrip.Services.Trips;
 using MountainTrip.Services.Guides;
@@ -83,20 +82,20 @@ namespace MountainTrip.Controllers
             //model correctly and whether any explicitly specified validation rules were broken during the model
             //binding process.
 
+            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
+
+            if (!IsDifficultyValid)
+            {
+                throw new InvalidDataException("Please select difficulty.");
+            }
+
             if (!ModelState.IsValid)
             {
                 trip.Mountains = trips.AllMountains();
 
                 return View(trip);
             }
-
-            //bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
-
-            //if (!IsDifficultyValid) //this is not necessary
-            //{
-            //    throw new ArgumentException("Difficulty is not valid.");
-            //}
-
+            
             trips.Create(
                 trip.Name,
                 trip.Description,
@@ -157,20 +156,20 @@ namespace MountainTrip.Controllers
                 ModelState.AddModelError(nameof(trip.MountainId), "Mountain does not exist.");
             }
 
+            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
+
+            if (!IsDifficultyValid)
+            {
+                throw new InvalidDataException("Please select difficulty.");
+            }
+
             if (!ModelState.IsValid)
             {
                 trip.Mountains = trips.AllMountains();
 
                 return View(trip);
             }
-
-            //bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
-
-            //if (!IsDifficultyValid)
-            //{
-            //    throw new ArgumentException("Difficulty is not valid.");
-            //}
-
+            
             if (!trips.IsByGuide(id, guideId))
             {
                 return BadRequest();

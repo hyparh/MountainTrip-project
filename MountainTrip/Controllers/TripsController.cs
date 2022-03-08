@@ -5,7 +5,6 @@ using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
 using MountainTrip.Services.Trips;
 using MountainTrip.Services.Guides;
-using MountainTrip.Services.Trips;
 
 namespace MountainTrip.Controllers
 {
@@ -56,7 +55,7 @@ namespace MountainTrip.Controllers
                 return RedirectToAction(nameof(GuidesController.Create), "Guides");
             }
 
-            return View(new AddTripFormModel
+            return View(new TripFormModel
             {
                 Mountains = trips.AllMountains()
             });
@@ -66,19 +65,16 @@ namespace MountainTrip.Controllers
 
         [HttpPost]
         [Authorize]        
-        public IActionResult Add(AddTripFormModel trip)
+        public IActionResult Add(TripFormModel trip)
         {
-            var guideId = data.Guides
-                .Where(g => g.UserId == User.GetId())
-                .Select(g => g.Id)
-                .FirstOrDefault();
+            var guideId = guides.GetIdByUser(User.GetId());
 
             if (guideId == 0)
             {
                 return RedirectToAction(nameof(GuidesController.Create), "Guides");
             }
 
-            if (!data.Mountains.Any(m => m.Id == trip.MountainId))
+            if (!trips.MountainExists(trip.MountainId))
             {
                 ModelState.AddModelError(nameof(trip.MountainId), "Mountain does not exist.");
             }
@@ -117,6 +113,86 @@ namespace MountainTrip.Controllers
             data.SaveChanges();
 
             return RedirectToAction(nameof(All));
-        }   
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = User.GetId();
+
+            if (!guides.IsGuide(userId))
+            {
+                return RedirectToAction(nameof(GuidesController.Create), "Guides");
+            }
+
+            var trip = trips.Details(id);
+
+            if (trip.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(new TripFormModel
+            {
+                Name = trip.Name,
+                Description = trip.Description,
+                Length = trip.Length,
+                Duration = trip.Duration,
+                Difficulty = trip.Difficulty,
+                ImageUrl = trip.ImageUrl,
+                MountainId = trip.MountainId,
+                Mountains = trips.AllMountains()
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(int id, TripFormModel trip)
+        {
+            var guideId = guides.GetIdByUser(User.GetId());
+
+            if (guideId == 0)
+            {
+                return RedirectToAction(nameof(GuidesController.Create), "Guides");
+            }
+
+            if (!trips.MountainExists(trip.MountainId))
+            {
+                ModelState.AddModelError(nameof(trip.MountainId), "Mountain does not exist.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                trip.Mountains = trips.AllMountains();
+
+                return View(trip);
+            }
+
+            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
+
+            if (!IsDifficultyValid)
+            {
+                throw new ArgumentException("Difficulty is not valid.");
+            }
+
+            var tripData = data.Trips.Find(id);
+
+            if (tripData.GuideId != guideId)
+            {
+                return BadRequest();
+            }
+
+            tripData.Name = trip.Name;
+            tripData.Description = trip.Description;
+            tripData.Length = trip.Length;
+            tripData.Difficulty = (DifficultyTypes)difficulty;
+            tripData.Duration = trip.Duration;
+            tripData.ImageUrl = trip.ImageUrl;
+            tripData.MountainId = trip.MountainId;              
+
+            data.SaveChanges();
+
+            return RedirectToAction(nameof(All));
+        }
     }
 }

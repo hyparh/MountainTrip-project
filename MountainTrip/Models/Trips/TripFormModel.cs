@@ -5,7 +5,7 @@ namespace MountainTrip.Services.Trips
 {
     using static DataConstants.Trip;
 
-    public class AddTripFormModel
+    public class TripFormModel
     {        
         [Required]        
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]

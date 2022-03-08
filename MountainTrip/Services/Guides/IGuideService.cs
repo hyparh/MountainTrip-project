@@ -3,5 +3,7 @@
     public interface IGuideService
     {
         public bool IsGuide(string userId);
+
+        public int GetIdByUser(string userId); //TODO: int? here?
     }
 }

@@ -1,0 +1,52 @@
+﻿@model TripFormModel
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-6">
+
+        <h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
+
+        <form method="post">
+            <div class="mb-3">
+              <label asp-for="Name" class="form-label"></label>
+              <input asp-for="Name" class="form-control" placeholder="Boyana Church-Boyana Waterfall, Aleko-Black Peak...">
+              <span asp-validation-for="Name" class="small text-danger"> </span>
+            </div>
+            <div class="mb-3">
+              <label asp-for="Description" class="form-label"></label>
+              <textarea asp-for="Description" rows="4" class="form-control" placeholder="Description of the trip..."></textarea>
+              <span asp-validation-for="Description" class="small text-danger"> </span>
+            </div>
+            <div class="mb-3">
+              <label asp-for="Length" class="form-label"></label>
+              <input asp-for="Length" rows="4" class="form-control" placeholder="Description of the trip...">
+              <span asp-validation-for="Length" class="small text-danger"> </span>
+            </div>
+            <div class="mb-3">
+              <label asp-for="Duration" class="form-label"></label>
+              <input asp-for="Duration" class="form-control" placeholder="Enter trip duration...">  
+              <span asp-validation-for="Duration" class="small text-danger"> </span>
+            </div>
+            <select asp-for="Difficulty" asp-items="Html.GetEnumSelectList<DifficultyTypes>()">
+                 <option selected="selected" value="">Select trip difficulty</option>
+              </select>              
+            <div class="mb-3">
+              <label asp-for="ImageUrl" class="form-label"></label>
+              <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL here...">
+              <span asp-validation-for="ImageUrl" class="small text-danger"> </span>
+            </div>
+            <div class="dropdown">              
+              <label asp-for="MountainId"></label>
+              <select asp-for="MountainId" class=form-control>
+                  @foreach(var mountain in Model.Mountains)
+                    {
+                        <option value="@mountain.Id">@mountain.Name</option>
+                    }
+              </select>  
+              <span asp-validation-for="MountainId" class="small text-danger"> </span>
+              <div class="d-grid d-md-block mt-3">
+                <button class="btn btn-primary" type="submit">Save</button>                  
+              </div>
+            </div>    
+        </form>
+    </div>
+</div>

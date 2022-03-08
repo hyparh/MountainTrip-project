@@ -13,5 +13,7 @@
         public string Difficulty { get; init; }
 
         public string ImageUrl { get; init; }
+
+        public string MountainName { get; init; } //TODO: this one is fully new!!! It may required to be filled at some palces
     }
 }

@@ -55,6 +55,24 @@ namespace MountainTrip.Services.Trips
             };
         }
 
+        public TripDetailsServiceModel Details(int id)
+            => data.Trips
+            .Where(t => t.Id == id)
+            .Select(t => new TripDetailsServiceModel 
+            {
+                Id = t.Id,
+                Name = t.Name,
+                Description = t.Description,
+                Difficulty = t.Difficulty.ToString(),
+                Duration = t.Duration,
+                ImageUrl = t.ImageUrl,
+                Length = t.Length,
+                GuideId = t.GuideId,
+                GuideFullName = t.Guide.FullName,
+                UserId = t.Guide.UserId
+            })
+            .FirstOrDefault();
+
         public IEnumerable<TripServiceModel> ByUser(string userId)
             => GetTrips(data.Trips
                 .Where(t => t.Guide.UserId == userId));
@@ -75,6 +93,9 @@ namespace MountainTrip.Services.Trips
               })
               .ToList();
 
+        public bool MountainExists(int mountainId)
+            => data.Mountains.Any(m => m.Id == mountainId);
+
         private static IEnumerable<TripServiceModel> GetTrips(IQueryable<Trip> tripQuery)
             => tripQuery
             .Select(t => new TripServiceModel
@@ -84,8 +105,9 @@ namespace MountainTrip.Services.Trips
                 Difficulty = t.Difficulty.ToString(),
                 Duration = t.Duration,
                 ImageUrl = t.ImageUrl,
-                Length = t.Length
+                Length = t.Length,
+                MountainName = t.Mountain.Name // TODO: is this should be here?
             })
-            .ToList();      
+            .ToList();        
     }
 }

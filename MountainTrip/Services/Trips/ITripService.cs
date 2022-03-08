@@ -15,25 +15,25 @@ namespace MountainTrip.Services.Trips
 
         // TODO: next ones must be done to follow conventions
 
-        //int Create(string name,
-        //        string description,
-        //        double length,
-        //        string difficulty,
-        //        string duration,
-        //        string imageUrl,
-        //        int mountainId,
-        //        int guideId,
-        //        TripFormModel trip);
+        int Create(string name,
+                string description,
+                double length,
+                string difficulty,
+                string duration,
+                string imageUrl,
+                int mountainId,
+                int guideId,
+                TripFormModel trip);
 
-        //bool Edit(int tripId,
-        //        string name,
-        //        string description,
-        //        double length,
-        //        string difficulty,
-        //        string duration,
-        //        string imageUrl,
-        //        int mountainId,
-        //        TripFormModel trip);
+        bool Edit(int tripId,
+                string name,
+                string description,
+                double length,
+                string difficulty,
+                string duration,
+                string imageUrl,
+                int mountainId,
+                TripFormModel trip);
 
         IEnumerable<TripServiceModel> ByUser(string userId);
 
@@ -42,5 +42,7 @@ namespace MountainTrip.Services.Trips
         IEnumerable<TripMountainServiceModel> AllMountains();
 
         bool MountainExists(int mountainId);
+
+        bool IsByGuide(int tripId, int guideId);
     }
 }

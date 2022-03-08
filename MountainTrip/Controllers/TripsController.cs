@@ -90,27 +90,23 @@ namespace MountainTrip.Controllers
                 return View(trip);
             }
 
-            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
+            //bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
 
-            if (!IsDifficultyValid) //this is not necessary
-            {
-                throw new ArgumentException("Difficulty is not valid.");
-            }
+            //if (!IsDifficultyValid) //this is not necessary
+            //{
+            //    throw new ArgumentException("Difficulty is not valid.");
+            //}
 
-            var tripData = new Trip 
-            {                
-                Name = trip.Name,
-                Description = trip.Description,
-                Length = trip.Length,
-                Difficulty = (DifficultyTypes)difficulty,
-                Duration = trip.Duration,
-                ImageUrl = trip.ImageUrl,
-                MountainId = trip.MountainId,
-                GuideId = guideId
-            };
-
-            data.Trips.Add(tripData);
-            data.SaveChanges();
+            trips.Create(
+                trip.Name,
+                trip.Description,
+                trip.Length,
+                trip.Difficulty,
+                trip.Duration,
+                trip.ImageUrl,
+                trip.MountainId,
+                guideId,
+                trip);
 
             return RedirectToAction(nameof(All));
         }
@@ -168,29 +164,28 @@ namespace MountainTrip.Controllers
                 return View(trip);
             }
 
-            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
+            //bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
 
-            if (!IsDifficultyValid)
-            {
-                throw new ArgumentException("Difficulty is not valid.");
-            }
+            //if (!IsDifficultyValid)
+            //{
+            //    throw new ArgumentException("Difficulty is not valid.");
+            //}
 
-            var tripData = data.Trips.Find(id);
-
-            if (tripData.GuideId != guideId)
+            if (!trips.IsByGuide(id, guideId))
             {
                 return BadRequest();
             }
 
-            tripData.Name = trip.Name;
-            tripData.Description = trip.Description;
-            tripData.Length = trip.Length;
-            tripData.Difficulty = (DifficultyTypes)difficulty;
-            tripData.Duration = trip.Duration;
-            tripData.ImageUrl = trip.ImageUrl;
-            tripData.MountainId = trip.MountainId;              
-
-            data.SaveChanges();
+            trips.Edit(
+                id,
+                trip.Name,
+                trip.Description,
+                trip.Length,
+                trip.Difficulty,
+                trip.Duration,
+                trip.ImageUrl,
+                trip.MountainId,
+                trip);
 
             return RedirectToAction(nameof(All));
         }

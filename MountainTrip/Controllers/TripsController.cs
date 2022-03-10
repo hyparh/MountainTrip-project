@@ -113,14 +113,14 @@ namespace MountainTrip.Controllers
         {
             var userId = User.Id();
 
-            if (!guides.IsGuide(userId))
+            if (!guides.IsGuide(userId) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(GuidesController.Create), "Guides");
             }
 
             var trip = trips.Details(id);
 
-            if (trip.UserId != userId)
+            if (trip.UserId != userId && !User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -144,7 +144,7 @@ namespace MountainTrip.Controllers
         {
             var guideId = guides.IdByUser(User.Id());
 
-            if (guideId == 0)
+            if (guideId == 0 && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(GuidesController.Create), "Guides");
             }
@@ -168,7 +168,7 @@ namespace MountainTrip.Controllers
                 return View(trip);
             }
             
-            if (!trips.IsByGuide(id, guideId))
+            if (!trips.IsByGuide(id, guideId) && !User.IsAdmin())
             {
                 return BadRequest();
             }

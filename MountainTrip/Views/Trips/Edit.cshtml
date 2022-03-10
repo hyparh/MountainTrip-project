@@ -5,3 +5,8 @@
 }
 
 <partial name="_TripFormPartial" model="@Model" />
+
+@*if data for edit is invalid it stops at browser level and prevents executing any code*@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

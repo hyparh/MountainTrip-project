@@ -9,7 +9,7 @@
               <div class="card-body text-center">
               <h5 class="card-title text-center">@trip.Name, @trip.Difficulty, @trip.Duration, @trip.Length</h5>           
               <a asp-controller="Trips" asp-action="Details" asp-route-id="@trip.Id" class="btn btn-primary">View Details</a>
-                    @if (ViewBag.AllowTripEdit == true)
+                    @if (ViewBag.AllowTripEdit == true || User.IsAdmin())
                     {
                         <a asp-controller="Trips" asp-action="Edit" asp-route-id="@trip.Id" class="btn btn-warning">Edit</a>
                         <a asp-controller="Trips" asp-action="Delete" asp-route-id="@trip.Id" class="btn btn-danger">Delete</a>

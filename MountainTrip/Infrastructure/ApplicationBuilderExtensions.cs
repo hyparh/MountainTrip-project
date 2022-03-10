@@ -1,27 +1,39 @@
 ﻿using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MountainTrip.Infrastructure
 {
+    using static WebConstants;
+
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder PrepareDatabase(
             this IApplicationBuilder app)
         {
-            using var scopedServices = app.ApplicationServices.CreateScope();
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            var services = serviceScope.ServiceProvider;
 
-            var data = scopedServices.ServiceProvider.GetService<MountainTripDbContext>();
-
-            data.Database.Migrate();
-
-            SeedCategories(data);
+            MigrateDatabase(services);
+            
+            SeedCategories(services);
+            SeedAdministrator(services);
 
             return app;
         }
 
-        private static void SeedCategories(MountainTripDbContext data)
+        private static void MigrateDatabase(IServiceProvider services)
         {
+            var data = services.GetRequiredService<MountainTripDbContext>();
+
+            data.Database.Migrate();
+        }
+
+        private static void SeedCategories(IServiceProvider services)
+        {
+            var data = services.GetRequiredService<MountainTripDbContext>();
+
             if (data.Mountains.Any())
             {
                 return;
@@ -37,6 +49,40 @@ namespace MountainTrip.Infrastructure
             });
 
             data.SaveChanges();
+        }
+
+        private static void SeedAdministrator(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<User>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            Task.Run(async () => 
+            {
+                if (await roleManager.RoleExistsAsync(AdminRoleName))
+                {
+                    return;
+                }
+
+                var role = new IdentityRole { Name = AdminRoleName };
+
+                await roleManager.CreateAsync(role);
+
+                const string adminEmail = "admin@mountaintrip.com";
+                const string adminPassword = "admin123";
+
+                var user = new User
+                {
+                    Email = adminEmail,
+                    UserName = adminEmail,
+                    FullName = "Admin"
+                };
+
+                await userManager.CreateAsync(user, adminPassword);
+
+                await userManager.AddToRoleAsync(user, role.Name);
+            })
+            .GetAwaiter()
+            .GetResult();
         }
     }
 }

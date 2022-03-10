@@ -10,14 +10,15 @@
 {
     var userId = User.Id();
     var userIsGuide = Guides.IsGuide(userId);
+        var userIsAdmin = User.IsAdmin();
 
-    @if (userIsGuide)
+    @if (userIsGuide && !userIsAdmin)
     {
         <li class="nav-item">
             <a  class="nav-link text-dark" asp-area="" asp-controller="Trips" asp-action="Mine">My Trips</a>
         </li>
     }
-    else
+    else if (!userIsAdmin)
     {
         <li class="nav-item">
             <a  class="nav-link text-dark" asp-area="" asp-controller="Guides" asp-action="Create">Become Guide</a>

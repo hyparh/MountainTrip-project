@@ -21,7 +21,7 @@ namespace MountainTrip.Data.Models
 
         [Required]
         public string Duration { get; set; }
-        
+       
         public DifficultyTypes Difficulty { get; set; }
 
         [Required]       

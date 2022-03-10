@@ -13,7 +13,7 @@ namespace MountainTrip.Services.Guides
             => data.Guides
             .Any(g => g.UserId == userId);
 
-        public int GetIdByUser(string userId)
+        public int IdByUser(string userId)
             => data.Guides
                 .Where(g => g.UserId == userId)
                 .Select(g => g.Id)

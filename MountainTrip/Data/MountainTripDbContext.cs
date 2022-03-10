@@ -5,7 +5,7 @@ using MountainTrip.Data.Models;
 
 namespace MountainTrip.Data
 {
-    public class MountainTripDbContext : IdentityDbContext
+    public class MountainTripDbContext : IdentityDbContext<User>
     {        
         public MountainTripDbContext(DbContextOptions<MountainTripDbContext> options)
             : base(options)
@@ -33,7 +33,7 @@ namespace MountainTrip.Data
                    .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Guide>()
-                   .HasOne<IdentityUser>()
+                   .HasOne<User>()
                    .WithOne()
                    .HasForeignKey<Guide>(g => g.UserId)
                    .OnDelete(DeleteBehavior.Restrict);

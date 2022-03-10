@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MountainTrip.Data;
+using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
 using MountainTrip.Services.Guides;
 using MountainTrip.Services.Trips;
@@ -15,13 +16,14 @@ builder.Services.AddDbContext<MountainTripDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+builder.Services.AddDefaultIdentity<User>(options => 
     {
         options.Password.RequireDigit = false;
         options.Password.RequireLowercase = false;
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequireUppercase = false;       
     })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<MountainTripDbContext>();
 
 builder.Services.AddControllersWithViews(options => 

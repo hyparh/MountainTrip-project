@@ -1,13 +1,14 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using MountainTrip.Data.Models
+@using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 @inject IGuideService Guides
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    var userId = User.GetId();
+    var userId = User.Id();
     var userIsGuide = Guides.IsGuide(userId);
 
     @if (userIsGuide)

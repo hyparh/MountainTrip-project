@@ -21,7 +21,7 @@ namespace MountainTrip.Controllers
         [Authorize]
         public IActionResult Create(BecomeGuideFormModel guide)
         {
-            var userId = User.GetId();
+            var userId = User.Id();
 
             var userIsAlreadyAGuide = data.Guides
                 .Any(g => g.UserId == userId);

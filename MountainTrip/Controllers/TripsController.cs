@@ -10,12 +10,10 @@ namespace MountainTrip.Controllers
     public class TripsController : Controller
     {
         private readonly ITripService trips;
-        private readonly IGuideService guides;
-        private readonly MountainTripDbContext data;
+        private readonly IGuideService guides;        
 
-        public TripsController(ITripService trips, MountainTripDbContext data, IGuideService guides)
+        public TripsController(ITripService trips, IGuideService guides)
         {
-            this.data = data;
             this.trips = trips;
             this.guides = guides;
         }
@@ -41,7 +39,7 @@ namespace MountainTrip.Controllers
         [Authorize]
         public IActionResult Mine()
         {
-            var myTrips = trips.ByUser(User.GetId());
+            var myTrips = trips.ByUser(User.Id());
 
             return View(myTrips);
         }
@@ -49,7 +47,7 @@ namespace MountainTrip.Controllers
         [Authorize]
         public IActionResult Add()
         {
-            if (!guides.IsGuide(User.GetId()))
+            if (!guides.IsGuide(User.Id()))
             {               
                 return RedirectToAction(nameof(GuidesController.Create), "Guides");
             }
@@ -66,7 +64,7 @@ namespace MountainTrip.Controllers
         [Authorize]        
         public IActionResult Add(TripFormModel trip)
         {
-            var guideId = guides.GetIdByUser(User.GetId());
+            var guideId = guides.IdByUser(User.Id());
 
             if (guideId == 0)
             {
@@ -82,12 +80,12 @@ namespace MountainTrip.Controllers
             //model correctly and whether any explicitly specified validation rules were broken during the model
             //binding process.
 
-            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
+            //bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
 
-            if (!IsDifficultyValid)
-            {
-                throw new InvalidDataException("Please select difficulty.");
-            }
+            //if (!IsDifficultyValid)
+            //{
+            //    throw new InvalidDataException("Please select difficulty.");
+            //}
 
             if (!ModelState.IsValid)
             {
@@ -113,7 +111,7 @@ namespace MountainTrip.Controllers
         [Authorize]
         public IActionResult Edit(int id)
         {
-            var userId = User.GetId();
+            var userId = User.Id();
 
             if (!guides.IsGuide(userId))
             {
@@ -144,7 +142,7 @@ namespace MountainTrip.Controllers
         [Authorize]
         public IActionResult Edit(int id, TripFormModel trip)
         {
-            var guideId = guides.GetIdByUser(User.GetId());
+            var guideId = guides.IdByUser(User.Id());
 
             if (guideId == 0)
             {
@@ -156,12 +154,12 @@ namespace MountainTrip.Controllers
                 ModelState.AddModelError(nameof(trip.MountainId), "Mountain does not exist.");
             }
 
-            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
+            //bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
 
-            if (!IsDifficultyValid)
-            {
-                throw new InvalidDataException("Please select difficulty.");
-            }
+            //if (!IsDifficultyValid)
+            //{
+            //    throw new InvalidDataException("Please select difficulty.");
+            //}
 
             if (!ModelState.IsValid)
             {

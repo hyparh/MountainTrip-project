@@ -4,6 +4,6 @@
     {
         public bool IsGuide(string userId);
 
-        public int GetIdByUser(string userId);
+        public int IdByUser(string userId);
     }
 }

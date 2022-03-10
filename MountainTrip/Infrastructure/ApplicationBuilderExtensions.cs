@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MountainTrip.Data;
+﻿using MountainTrip.Data;
 using MountainTrip.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MountainTrip.Infrastructure
 {

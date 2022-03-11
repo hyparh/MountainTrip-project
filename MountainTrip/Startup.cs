@@ -58,6 +58,10 @@ app.UseHttpsRedirection()
    .UseAuthentication()
    .UseAuthorization();
 
+app.MapControllerRoute(
+    name: "Areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 

@@ -1,8 +1,9 @@
-﻿using System.Security.Claims;
+﻿using MountainTrip.Areas.Admin;
+using System.Security.Claims;
 
 namespace MountainTrip.Infrastructure
 {
-    using static WebConstants;
+    using static AdminConstants;
 
     public static class ClaimsPrincipalExtensions
     {

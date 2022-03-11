@@ -2,10 +2,11 @@
 using MountainTrip.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using MountainTrip.Areas.Admin;
 
 namespace MountainTrip.Infrastructure
 {
-    using static WebConstants;
+    using static AdminConstants;
 
     public static class ApplicationBuilderExtensions
     {
@@ -16,8 +17,8 @@ namespace MountainTrip.Infrastructure
             var services = serviceScope.ServiceProvider;
 
             MigrateDatabase(services);
-            
-            SeedCategories(services);
+
+            SeedMountains(services);
             SeedAdministrator(services);
 
             return app;
@@ -30,7 +31,7 @@ namespace MountainTrip.Infrastructure
             data.Database.Migrate();
         }
 
-        private static void SeedCategories(IServiceProvider services)
+        private static void SeedMountains(IServiceProvider services)
         {
             var data = services.GetRequiredService<MountainTripDbContext>();
 

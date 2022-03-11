@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
 using MountainTrip.Services;
@@ -11,13 +13,16 @@ namespace MountainTrip.Controllers
     {
         private readonly MountainTripDbContext data;
         private readonly IStatisticsService statistics;
+        private readonly IMapper mapper;
 
         public HomeController(
-            IStatisticsService statistics,
-            MountainTripDbContext data)
+            MountainTripDbContext data,
+            IStatisticsService statistics,            
+            IMapper mapper)
         {
             this.data = data;
             this.statistics = statistics;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
@@ -27,15 +32,7 @@ namespace MountainTrip.Controllers
 
             var trips = data.Trips
                 .OrderByDescending(t => t.Id)
-                .Select(t => new TripIndexViewModel
-                {
-                    Id = t.Id,
-                    Name = t.Name,
-                    Difficulty = t.Difficulty.ToString(),
-                    Duration = t.Duration,
-                    ImageUrl = t.ImageUrl,
-                    Length = t.Length
-                })
+                .ProjectTo<TripIndexViewModel>(mapper.ConfigurationProvider)
                 .Take(3)
                 .ToList();
 

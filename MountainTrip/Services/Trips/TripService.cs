@@ -1,4 +1,6 @@
-﻿using MountainTrip.Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MountainTrip.Data;
 using MountainTrip.Data.Enums;
 using MountainTrip.Data.Models;
 
@@ -7,9 +9,13 @@ namespace MountainTrip.Services.Trips
     public class TripService : ITripService
     {
         private readonly MountainTripDbContext data;
+        private readonly IMapper mapper;
 
-        public TripService(MountainTripDbContext data)
-            => this.data = data;
+        public TripService(MountainTripDbContext data, IMapper mapper)
+        {
+            this.data = data;
+            this.mapper = mapper;
+        }
 
         public TripQueryServiceModel All(
             string name,
@@ -58,19 +64,21 @@ namespace MountainTrip.Services.Trips
         public TripDetailsServiceModel Details(int id)
             => data.Trips
             .Where(t => t.Id == id)
-            .Select(t => new TripDetailsServiceModel 
-            {
-                Id = t.Id,
-                Name = t.Name,
-                Description = t.Description,
-                Difficulty = t.Difficulty.ToString(),
-                Duration = t.Duration,
-                ImageUrl = t.ImageUrl,
-                Length = t.Length,
-                GuideId = t.GuideId,
-                GuideFullName = t.Guide.FullName,
-                UserId = t.Guide.UserId
-            })
+            .ProjectTo<TripDetailsServiceModel>(mapper.ConfigurationProvider)
+            //.Select(t => new TripDetailsServiceModel 
+            //{
+            //    Id = t.Id,
+            //    Name = t.Name,
+            //    Description = t.Description,
+            //    Difficulty = t.Difficulty.ToString(),
+            //    Duration = t.Duration,
+            //    ImageUrl = t.ImageUrl,
+            //    Length = t.Length,
+            //    GuideId = t.GuideId,
+            //    GuideFullName = t.Guide.FullName,
+            //    MountainId = t.MountainId,
+            //    UserId = t.Guide.UserId
+            //})
             .FirstOrDefault();
 
         public int Create(

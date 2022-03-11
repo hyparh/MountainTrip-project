@@ -1,21 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MountainTrip.Data;
 using MountainTrip.Infrastructure;
 using MountainTrip.Services.Trips;
 using MountainTrip.Services.Guides;
+using AutoMapper;
 
 namespace MountainTrip.Controllers
 {
     public class TripsController : Controller
     {
         private readonly ITripService trips;
-        private readonly IGuideService guides;        
+        private readonly IGuideService guides;
+        private readonly IMapper mapper;
 
-        public TripsController(ITripService trips, IGuideService guides)
+        public TripsController(ITripService trips, IGuideService guides, IMapper mapper)
         {
             this.trips = trips;
             this.guides = guides;
+            this.mapper = mapper;
         }
 
         public IActionResult All([FromQuery] AllTripsQueryModel query)
@@ -125,17 +127,10 @@ namespace MountainTrip.Controllers
                 return Unauthorized();
             }
 
-            return View(new TripFormModel
-            {
-                Name = trip.Name,
-                Description = trip.Description,
-                Length = trip.Length,
-                Duration = trip.Duration,
-                Difficulty = trip.Difficulty,
-                ImageUrl = trip.ImageUrl,
-                MountainId = trip.MountainId,
-                Mountains = trips.AllMountains()
-            });
+            var tripForm = mapper.Map<TripFormModel>(trip);
+            tripForm.Mountains = trips.AllMountains();
+
+            return View(tripForm);
         }
 
         [HttpPost]

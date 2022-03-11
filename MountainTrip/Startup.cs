@@ -26,6 +26,8 @@ builder.Services.AddDefaultIdentity<User>(options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<MountainTripDbContext>();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //automapper configuration
+
 builder.Services.AddControllersWithViews(options => 
 {
     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
@@ -58,10 +60,7 @@ app.UseHttpsRedirection()
    .UseAuthentication()
    .UseAuthorization();
 
-app.MapControllerRoute(
-    name: "Areas",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+app.MapDefaultAreaRoute();
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 

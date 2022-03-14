@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
-using MountainTrip.Services;
 using MountainTrip.Services.Home;
+using MountainTrip.Services.Trips;
 using Services.Statistics;
 
 namespace MountainTrip.Controllers
@@ -32,7 +31,7 @@ namespace MountainTrip.Controllers
 
             var trips = data.Trips
                 .OrderByDescending(t => t.Id)
-                .ProjectTo<TripIndexViewModel>(mapper.ConfigurationProvider)
+                .ProjectTo<LatestTripServiceModel>(mapper.ConfigurationProvider)
                 .Take(3)
                 .ToList();
 
@@ -46,7 +45,9 @@ namespace MountainTrip.Controllers
             });
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });        
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+        public IActionResult Error() => View();
     }
 }

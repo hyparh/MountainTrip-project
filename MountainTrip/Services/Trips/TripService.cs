@@ -60,6 +60,12 @@ namespace MountainTrip.Services.Trips
                 Trips = trips
             };
         }
+        public IEnumerable<LatestTripServiceModel> Latest()
+            => data.Trips
+                .OrderByDescending(t => t.Id)
+                .ProjectTo<LatestTripServiceModel>(mapper.ConfigurationProvider)
+                .Take(3)
+                .ToList();
 
         public TripDetailsServiceModel Details(int id)
             => data.Trips

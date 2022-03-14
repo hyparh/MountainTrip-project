@@ -1,4 +1,6 @@
-﻿namespace MountainTrip.Services.Home
+﻿using MountainTrip.Services.Trips;
+
+namespace MountainTrip.Services.Home
 {
     public class IndexViewModel
     {
@@ -8,6 +10,6 @@
 
         public int TotalBookings { get; init; }
 
-        public List<TripIndexViewModel> Trips { get; init; }
+        public List<LatestTripServiceModel> Trips { get; init; }
     }
 }

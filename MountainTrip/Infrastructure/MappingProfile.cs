@@ -10,7 +10,7 @@ namespace MountainTrip.Infrastructure
         public MappingProfile()
         {
             CreateMap<TripDetailsServiceModel, TripFormModel>();
-            CreateMap<Trip, TripIndexViewModel>();
+            CreateMap<Trip, LatestTripServiceModel>();
 
             CreateMap<Trip, TripDetailsServiceModel>()
                 .ForMember(t => t.UserId, cfg => cfg.MapFrom(t => t.Guide.UserId));                

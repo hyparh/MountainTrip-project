@@ -11,6 +11,8 @@ namespace MountainTrip.Services.Trips
             int currentPage,
             int tripsPerPage);
 
+        //IEnumerable<LatestTripServiceModel> Latest();
+
         TripDetailsServiceModel Details(int id);        
 
         int Create(string name,

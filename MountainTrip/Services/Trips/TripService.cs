@@ -24,7 +24,7 @@ namespace MountainTrip.Services.Trips
             int currentPage,
             int tripsPerPage)
         {
-            var tripsQuery = data.Trips.AsQueryable();
+            var tripsQuery = data.Trips.Where(t => t.IsPublic);
 
             if (!string.IsNullOrWhiteSpace(name))
             {
@@ -62,6 +62,7 @@ namespace MountainTrip.Services.Trips
         }
         public IEnumerable<LatestTripServiceModel> Latest()
             => data.Trips
+                .Where(t => t.IsPublic)
                 .OrderByDescending(t => t.Id)
                 .ProjectTo<LatestTripServiceModel>(mapper.ConfigurationProvider)
                 .Take(3)
@@ -114,7 +115,8 @@ namespace MountainTrip.Services.Trips
                 Duration = duration,
                 ImageUrl = imageUrl,
                 MountainId = mountainId,
-                GuideId = guideId
+                GuideId = guideId,
+                IsPublic = false
             };
 
             data.Trips.Add(tripData);
@@ -156,6 +158,7 @@ namespace MountainTrip.Services.Trips
             tripData.Duration = duration;
             tripData.ImageUrl = imageUrl;
             tripData.MountainId = mountainId;
+            tripData.IsPublic = false;
 
             data.SaveChanges();
 

@@ -108,7 +108,7 @@ namespace MountainTrip.Controllers
                 return View(trip);
             }
             
-            trips.Create(
+            var tripId = trips.Create(
                 trip.Name,
                 trip.Description,
                 trip.Length,
@@ -119,7 +119,7 @@ namespace MountainTrip.Controllers
                 guideId,
                 trip);
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { id = tripId, info = trip.Name + ", " + trip.Duration + ", " + trip.Length });
         }
 
         [Authorize]
@@ -191,7 +191,7 @@ namespace MountainTrip.Controllers
                 trip.MountainId,
                 trip);
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { id, info = trip.Name + ", " + trip.Duration + ", " + trip.Length });
         }
     }
 }

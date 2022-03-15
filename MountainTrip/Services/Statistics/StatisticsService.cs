@@ -11,7 +11,7 @@ namespace Services.Statistics
 
         public StatisticsServiceModel Total()
         {
-            var totalTrips = data.Trips.Count();
+            var totalTrips = data.Trips.Count(t => t.IsPublic);
             var totalUsers = data.Users.Count();
 
             return new StatisticsServiceModel 

@@ -27,6 +27,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
     .AddEntityFrameworkStores<MountainTripDbContext>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //automapper configuration
+builder.Services.AddMemoryCache(); //optional for caching
 
 builder.Services.AddControllersWithViews(options => 
 {
@@ -61,6 +62,12 @@ app.UseHttpsRedirection()
    .UseAuthorization();
 
 app.MapDefaultAreaRoute();
+
+app.MapControllerRoute(
+    name: "Trip Details",
+    pattern: "/Trips/Details/{id}/{info}",
+    defaults: new { controller = "Trips", action = "Details"});
+
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 

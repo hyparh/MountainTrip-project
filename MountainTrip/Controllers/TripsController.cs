@@ -46,6 +46,18 @@ namespace MountainTrip.Controllers
             return View(myTrips);
         }
 
+        public IActionResult Details(int id, string info)
+        {
+            var trip = trips.Details(id);
+
+            if (!info.Contains(trip.Name))
+            {
+                return BadRequest(); // TODO check why this does not work
+            }
+
+            return View(trip);
+        }
+
         [Authorize]
         public IActionResult Add()
         {

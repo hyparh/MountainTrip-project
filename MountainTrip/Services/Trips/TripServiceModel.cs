@@ -15,5 +15,7 @@
         public string ImageUrl { get; init; }
 
         public string MountainName { get; init; }
+
+        public bool IsPublic { get; init; }
     }
 }

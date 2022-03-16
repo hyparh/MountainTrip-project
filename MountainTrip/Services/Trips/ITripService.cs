@@ -5,11 +5,12 @@ namespace MountainTrip.Services.Trips
     public interface ITripService
     {
         TripQueryServiceModel All(
-            string name,
-            string searching,
-            TripSorting sorting,
-            int currentPage,
-            int tripsPerPage);
+            string name = null,
+            string searching = null,
+            TripSorting sorting = TripSorting.TripName, //TODO: Is it good here?
+            int currentPage = 1,
+            int tripsPerPage = int.MaxValue,
+            bool publicOnly = true);
 
         //IEnumerable<LatestTripServiceModel> Latest();
 
@@ -33,7 +34,8 @@ namespace MountainTrip.Services.Trips
                 string duration,
                 string imageUrl,
                 int mountainId,
-                TripFormModel trip);
+                TripFormModel trip,
+                bool isPublic);
 
         IEnumerable<TripServiceModel> ByUser(string userId);
 
@@ -44,5 +46,7 @@ namespace MountainTrip.Services.Trips
         bool MountainExists(int mountainId);
 
         bool IsByGuide(int tripId, int guideId);
+
+        void ChangeVisibility(int tripId);
     }
 }

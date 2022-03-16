@@ -18,13 +18,14 @@ namespace MountainTrip.Services.Trips
         }
 
         public TripQueryServiceModel All(
-            string name,
-            string searching,
-            TripSorting sorting,
-            int currentPage,
-            int tripsPerPage)
+            string name = null,
+            string searching = null,
+            TripSorting sorting = TripSorting.TripName,
+            int currentPage = 1,
+            int tripsPerPage = int.MaxValue,
+            bool publicOnly = true)
         {
-            var tripsQuery = data.Trips.Where(t => t.IsPublic);
+            var tripsQuery = data.Trips.Where(t => !publicOnly || t.IsPublic);
 
             if (!string.IsNullOrWhiteSpace(name))
             {
@@ -134,7 +135,8 @@ namespace MountainTrip.Services.Trips
             string duration,
             string imageUrl,
             int mountainId,
-            TripFormModel trip)
+            TripFormModel trip,
+            bool isPublic)
         {
             bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object parsedDifficulty);
 
@@ -158,7 +160,7 @@ namespace MountainTrip.Services.Trips
             tripData.Duration = duration;
             tripData.ImageUrl = imageUrl;
             tripData.MountainId = mountainId;
-            tripData.IsPublic = false;
+            tripData.IsPublic = isPublic;
 
             data.SaveChanges();
 
@@ -173,6 +175,15 @@ namespace MountainTrip.Services.Trips
             => data.Trips
                    .Any(t => t.Id == tripId && t.GuideId == guideId);
 
+        public void ChangeVisibility(int tripId)
+        {
+            var trip = data.Trips.Find(tripId);
+
+            trip.IsPublic = !trip.IsPublic;
+
+            data.SaveChanges();
+        }
+
         public IEnumerable<string> AllNames()
             => data.Trips
                 .Select(t => t.Name)
@@ -182,28 +193,15 @@ namespace MountainTrip.Services.Trips
 
         public IEnumerable<TripMountainServiceModel> AllMountains()
            => data.Mountains
-              .Select(m => new TripMountainServiceModel
-              {
-                  Id = m.Id,
-                  Name = m.Name
-              })
+              .ProjectTo<TripMountainServiceModel>(mapper.ConfigurationProvider)
               .ToList();
 
         public bool MountainExists(int mountainId)
             => data.Mountains.Any(m => m.Id == mountainId);
 
-        private static IEnumerable<TripServiceModel> GetTrips(IQueryable<Trip> tripQuery)
+        private IEnumerable<TripServiceModel> GetTrips(IQueryable<Trip> tripQuery)
             => tripQuery
-            .Select(t => new TripServiceModel
-            {
-                Id = t.Id,
-                Name = t.Name,
-                Difficulty = t.Difficulty.ToString(),
-                Duration = t.Duration,
-                ImageUrl = t.ImageUrl,
-                Length = t.Length,
-                MountainName = t.Mountain.Name
-            })
-            .ToList();        
+            .ProjectTo<TripServiceModel>(mapper.ConfigurationProvider)
+            .ToList();
     }
 }

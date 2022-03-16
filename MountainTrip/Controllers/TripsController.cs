@@ -189,7 +189,8 @@ namespace MountainTrip.Controllers
                 trip.Duration,
                 trip.ImageUrl,
                 trip.MountainId,
-                trip);
+                trip,
+                User.IsAdmin());
 
             return RedirectToAction(nameof(Details), new { id, info = trip.Name + ", " + trip.Duration + ", " + trip.Length });
         }

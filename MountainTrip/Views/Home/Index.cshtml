@@ -31,7 +31,7 @@
         @if (firstTrip != null)
         {
             <div class="carousel-item active">
-              <img src="@firstTrip.ImageUrl" class="d-block w-100" alt="@firstTrip.Name @firstTrip.Length">
+              <img height="700" src="@firstTrip.ImageUrl" class="d-block w-100" alt="@firstTrip.Name @firstTrip.Length">
               <div class="carousel-caption d-none d-md-block">
                 <h5><a class="btn btn-primary" asp-controller="Trips" asp-action="Details" asp-route-id="@firstTrip.Id" asp-route-info="@(firstTrip.Name + ", " + firstTrip.Duration + ", " + firstTrip.Length)">@firstTrip.Name, @firstTrip.Length</a></h5>                
               </div>
@@ -40,7 +40,7 @@
         @if (secondTrip != null)
         {
             <div class="carousel-item">
-              <img src="@secondTrip.ImageUrl" class="d-block w-100" alt="@secondTrip.Name @secondTrip.Length">
+              <img height="700" src="@secondTrip.ImageUrl" class="d-block w-100" alt="@secondTrip.Name @secondTrip.Length">
               <div class="carousel-caption d-none d-md-block">
                 <h5><a class="btn btn-primary" asp-controller="Trips" asp-action="Details" asp-route-id="@secondTrip.Id" asp-route-info="@(secondTrip.Name + ", " + secondTrip.Duration + ", " + secondTrip.Length)">@secondTrip.Name, @secondTrip.Length</a></h5>                 
               </div>
@@ -49,7 +49,7 @@
         @if (thirdTrip != null)
         {
             <div class="carousel-item">
-              <img src="@thirdTrip.ImageUrl" class="d-block w-100" alt="@thirdTrip.Name @thirdTrip.Length">
+              <img height="700" src="@thirdTrip.ImageUrl" class="d-block w-100" alt="@thirdTrip.Name @thirdTrip.Length">
               <div class="carousel-caption d-none d-md-block">
                 <h5><a class="btn btn-primary" asp-controller="Trips" asp-action="Details" asp-route-id="@thirdTrip.Id" asp-route-info="@(thirdTrip.Name + ", " + thirdTrip.Duration + ", " + thirdTrip.Length)">@thirdTrip.Name, @thirdTrip.Length</a></h5>                
               </div>

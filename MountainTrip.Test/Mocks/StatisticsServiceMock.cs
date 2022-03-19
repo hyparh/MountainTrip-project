@@ -5,7 +5,7 @@ namespace MountainTrip.Test.Mocks
 {
     public static class StatisticsServiceMock
     {
-        public static IStatisticsService? Instance 
+        public static IStatisticsService Instance 
         {
             get 
             {

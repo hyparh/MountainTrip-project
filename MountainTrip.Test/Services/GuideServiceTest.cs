@@ -37,17 +37,13 @@ namespace MountainTrip.Test.Services
         private static IGuideService GetGuideService()
         {
             // Common Arrange
-            const string userId = "TestUserId";
-            const string fullName = "John Snow";
-            const string phoneNumber = "+359-888-888";
-
             var data = DatabaseMock.Instance;
 
             data.Guides.Add(new Guide
             {
-                UserId = userId,
-                FullName = fullName,
-                PhoneNumber = phoneNumber
+                UserId = "TestUserId",
+                FullName = "John Snow",
+                PhoneNumber = "+359-888-888"
             });
 
             data.SaveChanges();

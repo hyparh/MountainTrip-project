@@ -180,7 +180,7 @@ namespace MountainTrip.Controllers
                 return BadRequest();
             }
 
-            trips.Edit(
+            var edited = trips.Edit(
                 id,
                 trip.Name,
                 trip.Description,
@@ -191,6 +191,11 @@ namespace MountainTrip.Controllers
                 trip.MountainId,
                 trip,
                 User.IsAdmin());
+
+            if (!edited)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction(nameof(Details), new { id, info = trip.Name + ", " + trip.Duration + ", " + trip.Length });
         }

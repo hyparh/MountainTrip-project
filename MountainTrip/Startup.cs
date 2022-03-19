@@ -66,7 +66,10 @@ app.MapDefaultAreaRoute();
 app.MapControllerRoute(
     name: "Trip Details",
     pattern: "/Trips/Details/{id}/{info}",
-    defaults: new { controller = "Trips", action = "Details"});
+    defaults: new 
+    { 
+        controller = "Trips", action = "Details"
+    });
 
 app.MapDefaultControllerRoute();
 app.MapRazorPages();

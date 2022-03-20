@@ -44,6 +44,30 @@
         <div class="container">
             &copy; @DateTime.UtcNow.Year - MountainTrip
         </div>
+
+        <p>Click the button to get your coordinates.</p>
+
+    <button type="button" class="btn btn-info" onclick="getLocation()">Geolocation</button>
+    
+    <p id="demo"></p>
+    
+    <script>
+        var x = document.getElementById("demo");
+        
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else { 
+            x.innerHTML = "Geolocation is not supported by this browser.";
+          }
+        }
+        
+        function showPosition(position) {
+          x.innerHTML = "Latitude: " + position.coords.latitude + 
+          "<br>Longitude: " + position.coords.longitude;
+        }
+    </script>
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -35,7 +35,7 @@ namespace MountainTrip.Controllers
                 .Take(3)
                 .ToList();
 
-            var totalStatistics = statistics.Total();
+            var totalStatistics = statistics.Total();            
 
             return View(new IndexViewModel 
             {

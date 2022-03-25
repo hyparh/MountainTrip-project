@@ -9,9 +9,35 @@
     <link rel="stylesheet" href="~/MountainTrip.styles.css" asp-append-version="true" />
 </head>
 <body>
+
+    <div id="geolocation" class="position-absolute end-0 mt-5">
+        <p>Get your exact position:</p>
+
+        <button type="button" class="btn btn-info" onclick="getLocation()">Geolocation</button>
+        
+        <p id="demo"></p>
+        
+        <script>
+            var x = document.getElementById("demo");
+            
+            function getLocation() {
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+              } else { 
+                x.innerHTML = "Geolocation is not supported by this browser.";
+              }
+            }
+            
+            function showPosition(position) {
+              x.innerHTML = "Latitude: " + position.coords.latitude +
+              "<br>Longitude: " + position.coords.longitude;
+            }
+        </script>
+    </div>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
+            <div class="container-fluid">               
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mountain Trip</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -32,10 +58,10 @@
                     <partial name="_LoginPartial" />
                 </div>
             </div>
-        </nav>
+        </nav>       
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3">        
             @RenderBody()
         </main>
     </div>
@@ -43,31 +69,7 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; @DateTime.UtcNow.Year - MountainTrip
-        </div>
-
-        <p>Click the button to get your coordinates.</p>
-
-    <button type="button" class="btn btn-info" onclick="getLocation()">Geolocation</button>
-    
-    <p id="demo"></p>
-    
-    <script>
-        var x = document.getElementById("demo");
-        
-        function getLocation() {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-          } else { 
-            x.innerHTML = "Geolocation is not supported by this browser.";
-          }
-        }
-        
-        function showPosition(position) {
-          x.innerHTML = "Latitude: " + position.coords.latitude + 
-          "<br>Longitude: " + position.coords.longitude;
-        }
-    </script>
-
+        </div>        
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

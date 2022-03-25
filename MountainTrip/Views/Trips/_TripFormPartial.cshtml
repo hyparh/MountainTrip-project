@@ -26,9 +26,11 @@
               <input asp-for="Duration" class="form-control" placeholder="Enter trip duration...">  
               <span asp-validation-for="Duration" class="small text-danger"> </span>
             </div>
-            <select asp-for="Difficulty" asp-items="Html.GetEnumSelectList<DifficultyTypes>()">
-                 @*<option selected="selected" value="">Select trip difficulty</option> *@                
-              </select>              
+            <div class="mb-3">
+            <label asp-for="Difficulty" class="form-label"></label>            
+            <select asp-for="Difficulty" class="form-control" asp-items="Html.GetEnumSelectList<DifficultyTypes>()">                
+              </select>  
+            </div>
             <div class="mb-3">
               <label asp-for="ImageUrl" class="form-label"></label>
               <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL here...">

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MountainTrip.Data.Models;
-using MountainTrip.Services.Home;
 using MountainTrip.Services.Trips;
 
 namespace MountainTrip.Infrastructure

@@ -119,7 +119,10 @@ namespace MountainTrip.Controllers
                 guideId,
                 trip);
 
-            return RedirectToAction(nameof(Details), new { id = tripId, info = trip.Name + ", " + trip.Duration + ", " + trip.Length });
+            return RedirectToAction(nameof(Details), new 
+            { 
+                id = tripId, info = trip.Name + ", " + trip.Duration + ", " + trip.Length 
+            });
         }
 
         [Authorize]

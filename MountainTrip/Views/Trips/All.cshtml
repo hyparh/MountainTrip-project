@@ -6,35 +6,21 @@
 
 <form method="get">
     <div class="row mb-3">
-
-        @*the next one is search by dropdown menu*@
-
-        @*<div class="form-group col-md-3">
-            <div class="dropdown">              
-              <label asp-for="Name"></label>
-              <select asp-for="Name" class=form-control>
-                  @foreach(var name in Model.Names)
-                    {
-                        <option value="@name">@name</option>
-                    }
-              </select>                            
-            </div> 
-        </div>*@
                 
         <div class="form-group col-md-3">
             <label asp-for="Searching"></label>
             <input asp-for="Searching" class="form-control mt-2" placeholder="Boyana Church - Boyana Waterfall">            
         </div>
 
-        <div class="form-group col-md-3">
-          <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
+          <div class="form-group col-md-4">
             <div class="dropdown">              
               <label asp-for="Sorting"></label>
               <select asp-for="Sorting" class="form-control mt-2">
                   <option value="1" selected>Trip name</option>
                   <option value="2">Trip difficulty</option>
                   <option value="3">Trip duration</option>
-              </select>                            
+              </select>          
             </div> 
           </div>            
         </div>

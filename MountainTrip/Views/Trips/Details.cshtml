@@ -1,6 +1,16 @@
 ﻿@model TripDetailsServiceModel
 
 <div class="col-md-6 offset-3">
-    <h2>@Model.Name @Model.Duration</h2>
-    @*<img src="@trip.ImageUrl" class="card-img-top" alt="@trip.Name @trip.Difficulty - @trip.Duration @trip.Length">*@
+    <h2>        
+        <p style="color:blue">
+            Route: 
+            <span style="color: black">@Model.Name</span> <br>
+            Mountain:
+            <span style="color: black">@Model.MountainName</span> <br>
+            Duration:
+            <span style="color: black">@Model.Duration</span> <br> <br>
+            Giude:
+            <span style="color: black">@Model.GuideFullName</span>
+        </p>                     
+    </h2>           
 </div>

@@ -46,7 +46,7 @@ namespace MountainTrip.Infrastructure
                 new Mountain { Name = "Stara planina"},
                 new Mountain { Name = "Rila"},
                 new Mountain { Name = "Pirin"},
-                new Mountain { Name = "Rodopi"},
+                new Mountain { Name = "Rodopi"}
             });
 
             data.SaveChanges();

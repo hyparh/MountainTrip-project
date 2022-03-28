@@ -31,27 +31,27 @@
         @if (firstTrip != null)
         {
             <div class="carousel-item active">
-              <img height="700" src="@firstTrip.ImageUrl" class="d-block w-100" alt="@firstTrip.Name @firstTrip.Length">
+              <img height="700" src="@firstTrip.ImageUrl" class="d-block w-100" alt="@firstTrip.Name">
               <div class="carousel-caption d-none d-md-block">
-                <h5><a class="btn btn-primary" asp-controller="Trips" asp-action="Details" asp-route-id="@firstTrip.Id" asp-route-info="@(firstTrip.Name + ", " + firstTrip.Duration + ", " + firstTrip.Length)">@firstTrip.Name, @firstTrip.Length</a></h5>                
+                <h5><a class="btn btn-primary" asp-controller="Trips" asp-action="Details" asp-route-id="@firstTrip.Id" asp-route-info="@(firstTrip.Name + ", " + firstTrip.Duration + ", " + firstTrip.Length)">@firstTrip.Name</a></h5>                
               </div>
             </div>
         }
         @if (secondTrip != null)
         {
             <div class="carousel-item">
-              <img height="700" src="@secondTrip.ImageUrl" class="d-block w-100" alt="@secondTrip.Name @secondTrip.Length">
+              <img height="700" src="@secondTrip.ImageUrl" class="d-block w-100" alt="@secondTrip.Name">
               <div class="carousel-caption d-none d-md-block">
-                <h5><a class="btn btn-primary" asp-controller="Trips" asp-action="Details" asp-route-id="@secondTrip.Id" asp-route-info="@(secondTrip.Name + ", " + secondTrip.Duration + ", " + secondTrip.Length)">@secondTrip.Name, @secondTrip.Length</a></h5>                 
+                <h5><a class="btn btn-primary" asp-controller="Trips" asp-action="Details" asp-route-id="@secondTrip.Id" asp-route-info="@(secondTrip.Name + ", " + secondTrip.Duration + ", " + secondTrip.Length)">@secondTrip.Name</a></h5>                 
               </div>
             </div>
         }
         @if (thirdTrip != null)
         {
             <div class="carousel-item">
-              <img height="700" src="@thirdTrip.ImageUrl" class="d-block w-100" alt="@thirdTrip.Name @thirdTrip.Length">
+              <img height="700" src="@thirdTrip.ImageUrl" class="d-block w-100" alt="@thirdTrip.Name">
               <div class="carousel-caption d-none d-md-block">
-                <h5><a class="btn btn-primary" asp-controller="Trips" asp-action="Details" asp-route-id="@thirdTrip.Id" asp-route-info="@(thirdTrip.Name + ", " + thirdTrip.Duration + ", " + thirdTrip.Length)">@thirdTrip.Name, @thirdTrip.Length</a></h5>                
+                <h5><a class="btn btn-primary" asp-controller="Trips" asp-action="Details" asp-route-id="@thirdTrip.Id" asp-route-info="@(thirdTrip.Name + ", " + thirdTrip.Duration + ", " + thirdTrip.Length)">@thirdTrip.Name</a></h5>                
               </div>
             </div>
         }            
@@ -79,34 +79,3 @@
         </h3>
     </div>
 </div>
-
-@*modifications for visualizing the statistics via JS. It's AJAX request*@
-
-@*<div class="row">
-    <div class="col-12 text-center">
-        <button class="btn btn-primary" id="statistics-button">Show statistics</button>
-    </div>    
-</div>
-
-<div class="mt-4 p-5 bg-primary text-white rounded d-none" id="statistics">
-    <div class="row">
-        <h3 class="col-md-4 text-center" id="total-trips">Trips</h3>
-        <h3 class="col-md-4 text-center" id="total-users"></h3>
-        <h3 class="col-md-4 text-center" id="total-bookings"></h3>
-    </div>
-</div>
-
-@section Scripts{
-    <script>
-        $('#statistics-button').on('click', ev => {
-            $.get('/api/statistics', (data) => {
-                $('#total-trips').text(data.TotalTrips + " Trips");
-                $('#total-users').text(data.TotalUsers + " Users");
-                $('#total-bookings').text(data.TotalBookings + " Bookings");
-
-                $('#statistics').removeClass('d-none');
-                $('#statistics-button').hide();
-            });
-        });      
-    </script>
-    }*@

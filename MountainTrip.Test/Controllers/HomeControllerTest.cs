@@ -81,23 +81,23 @@
         //{
         //    // Arrange
         //    var homeController = new HomeController(null, Mock.Of<IMapper>(), null);
-        //
+
         //    // Act
         //    var result = homeController.Error();
-        //
+
         //    // Assert
         //    Assert.NotNull(result);
         //    Assert.IsType<ViewResult>(result);
-        //}        
+        //}
 
-        [Fact]
-        public void ErrorShouldReturnView()
-            => MyMvc
-            .Pipeline()
-            .ShouldMap("/Home/Error")
-            .To<HomeController>(t => t.Error())
-            .Which()
-            .ShouldReturn()
-            .View();
+        //[Fact]
+        //public void ErrorShouldReturnView()
+        //    => MyMvc
+        //    .Pipeline()
+        //    .ShouldMap("/Home/Error")
+        //    .To<HomeController>(t => t.Error())
+        //    .Which()
+        //    .ShouldReturn()
+        //    .View();
     }
 }

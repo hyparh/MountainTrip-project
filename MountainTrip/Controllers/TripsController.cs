@@ -88,18 +88,7 @@ namespace MountainTrip.Controllers
             if (!trips.MountainExists(trip.MountainId))
             {
                 ModelState.AddModelError(nameof(trip.MountainId), "Mountain does not exist.");
-            }
-
-            //ModelState.IsValid indicates if it was possible to bind the incoming values from the request to the
-            //model correctly and whether any explicitly specified validation rules were broken during the model
-            //binding process.
-
-            //bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
-
-            //if (!IsDifficultyValid)
-            //{
-            //    throw new InvalidDataException("Please select difficulty.");
-            //}
+            }            
 
             if (!ModelState.IsValid)
             {
@@ -162,14 +151,7 @@ namespace MountainTrip.Controllers
             if (!trips.MountainExists(trip.MountainId))
             {
                 ModelState.AddModelError(nameof(trip.MountainId), "Mountain does not exist.");
-            }
-
-            //bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object difficulty);
-
-            //if (!IsDifficultyValid)
-            //{
-            //    throw new InvalidDataException("Please select difficulty.");
-            //}
+            }            
 
             if (!ModelState.IsValid)
             {

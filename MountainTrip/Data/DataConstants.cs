@@ -34,6 +34,11 @@
             public const int FullNameMaxLength = 50;
             public const int PhoneNumberMinLength = 5;
             public const int PhoneNumberMaxLength = 30;
-        }                     
+        }
+
+        public class Booking
+        {
+            public const int TimeMaxLength = 8;
+        }
     }
 }

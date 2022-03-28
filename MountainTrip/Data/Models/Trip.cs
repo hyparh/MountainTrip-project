@@ -23,6 +23,8 @@ namespace MountainTrip.Data.Models
         public string Duration { get; set; }
 
         public bool IsPublic { get; set; }
+
+        public bool IsDeleted { get; set; }
        
         public DifficultyTypes Difficulty { get; set; }
 
@@ -31,10 +33,14 @@ namespace MountainTrip.Data.Models
 
         [ForeignKey(nameof(Mountain))]
         public int MountainId { get; set; }
-        public Mountain Mountain { get; init; }
+        public Mountain Mountain { get; set; }
 
         [ForeignKey(nameof(Guide))]
-        public int GuideId { get; init; }
-        public Guide Guide { get; init; }
+        public int GuideId { get; set; }
+        public Guide Guide { get; set; }
+
+        [ForeignKey(nameof(Booking))]
+        public int BookingId { get; set; }
+        public Booking Booking { get; set; }
     }
 }

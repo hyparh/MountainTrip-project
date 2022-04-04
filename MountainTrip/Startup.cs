@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
+using MountainTrip.Services.Bookings;
 using MountainTrip.Services.Guides;
 using MountainTrip.Services.Trips;
 using Services.Statistics;
@@ -37,6 +38,7 @@ builder.Services.AddControllersWithViews(options =>
 builder.Services.AddTransient<ITripService, TripService>();
 builder.Services.AddTransient<IGuideService, GuideService>();
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+builder.Services.AddTransient<IBookingService, BookingService>();
 
 var app = builder.Build();
 

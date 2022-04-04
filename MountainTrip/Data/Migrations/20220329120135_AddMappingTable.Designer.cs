@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MountainTrip.Data;
 
@@ -11,9 +12,10 @@ using MountainTrip.Data;
 namespace MountainTrip.Data.Migrations
 {
     [DbContext(typeof(MountainTripDbContext))]
-    partial class MountainTripDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220329120135_AddMappingTable")]
+    partial class AddMappingTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,9 +169,6 @@ namespace MountainTrip.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<byte>("PeopleCount")
-                        .HasColumnType("tinyint");
-
                     b.Property<string>("Time")
                         .IsRequired()
                         .HasMaxLength(8)
@@ -240,6 +239,9 @@ namespace MountainTrip.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("BookingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -258,6 +260,9 @@ namespace MountainTrip.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
@@ -273,6 +278,8 @@ namespace MountainTrip.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
 
                     b.HasIndex("GuideId");
 
@@ -427,6 +434,12 @@ namespace MountainTrip.Data.Migrations
 
             modelBuilder.Entity("MountainTrip.Data.Models.Trip", b =>
                 {
+                    b.HasOne("MountainTrip.Data.Models.Booking", "Booking")
+                        .WithMany()
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MountainTrip.Data.Models.Guide", "Guide")
                         .WithMany("Trips")
                         .HasForeignKey("GuideId")
@@ -438,6 +451,8 @@ namespace MountainTrip.Data.Migrations
                         .HasForeignKey("MountainId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Booking");
 
                     b.Navigation("Guide");
 

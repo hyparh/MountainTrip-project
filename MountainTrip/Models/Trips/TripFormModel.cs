@@ -9,6 +9,7 @@ namespace MountainTrip.Services.Trips
     {        
         [Required]        
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
+        [Display(Name = "Name (from - to)")]
         public string Name { get; init; }
 
         [Required]        

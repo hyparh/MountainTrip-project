@@ -19,6 +19,8 @@ namespace MountainTrip.Data
 
         public DbSet<Booking> Bookings { get; init; }
 
+        public DbSet<TripBooking> TripsBookings { get; init; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Trip>()
@@ -39,11 +41,20 @@ namespace MountainTrip.Data
                    .HasForeignKey<Guide>(g => g.UserId)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Trip>()
-                   .HasOne(b => b.Booking)
-                   .WithMany(t => t.Trips)
-                   .HasForeignKey(m => m.BookingId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<TripBooking>(e =>
+            {
+                e.HasKey(pk => new { pk.TripId, pk.BookingId });
+            });
+
+            //builder.Entity<Trip>()
+            //       .HasOne(c => c.Booking)
+            //       .WithMany()
+            //       .OnDelete(DeleteBehavior.Restrict);
+
+            //builder.Entity<Booking>()
+            //       .HasOne(s => s.TripsBookings)
+            //       .WithMany()                   
+            //       .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

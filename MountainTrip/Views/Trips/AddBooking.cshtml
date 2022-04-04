@@ -1,0 +1,39 @@
+﻿
+
+@*@{
+    ViewBag.Title = "Book your trip";
+}*@
+
+@*<img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Name @Model.Difficulty - @Model.Duration @Model.Length">
+              <div class="card-body text-center">
+              <h5 class="card-title text-center">@Model.Name, @Model.Difficulty, @Model.Duration, @Model.Length</h5>           
+              <a asp-controller="Trips" 
+              asp-action="Details" 
+              asp-route-id="@Model.Id" 
+              asp-route-info="@(Model.Name + ", " + Model.Duration + ", " + Model.Length)" class="btn btn-primary">View Details</a>
+
+  <div class="position-absolute top-50 start-50 translate-middle">
+      <button class="btn btn-primary" type="submit">Save Booking</button>
+  </div>*@
+
+@model TripDetailsServiceModel
+
+@*<div class="col-md-6 offset-3">
+    <h2>        
+        <p style="color:blue">
+            Route: 
+            <span style="color: black">@Model.Name</span> <br>
+            Mountain:
+            <span style="color: black">@Model.MountainName</span> <br>
+            Duration:
+            <span style="color: black">@Model.Duration</span> <br>
+            Length:
+            <span style="color: black">@Model.Length km</span> <br> <br>
+        </p>                     
+    </h2>
+</div>*@
+
+  <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <img src="~/images/mou.jpg"  />
+  </div>

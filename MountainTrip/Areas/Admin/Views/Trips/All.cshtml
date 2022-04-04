@@ -21,6 +21,7 @@
       <th scope="col">Difficulty</th>
       <th scope="col">MountainName</th>
       <th scope="col">Approved</th>
+      <th scope="col">Bookings</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -34,11 +35,11 @@
                 <td scope="col">@trip.Duration</td>
                 <td scope="col">@trip.Difficulty</td>
                 <td scope="col">@trip.MountainName</td>
-                <td scope="col">@(trip.IsPublic ? "Yes" : "No")</td>
+                <td scope="col">@(trip.IsPublic ? "Yes" : "No")</td>                
                 <td scope="col">
                     <a asp-area="" asp-controller="Trips" asp-action="Details" asp-route-id="@trip.Id" asp-route-info="@(trip.Name + ", " + trip.Duration + ", " + trip.Length)" class="btn btn-primary">View Details</a>
                     <a asp-area="" asp-controller="Trips" asp-action="Edit" asp-route-id="@trip.Id" class="btn btn-warning ">Edit</a>
-                    <a asp-area="Admin" asp-controller="Trips" asp-action="ChangeVisibility" asp-route-id="@trip.Id" class="btn btn-info ">@(trip.IsPublic ? "Hide" : "Show")</a>
+                    <a asp-area="Admin" asp-controller="Trips" asp-action="ChangeVisibility" asp-route-id="@trip.Id" class="btn btn-info ">@(trip.IsPublic ? "Hide" : "Show")</a>                    
                     <a asp-area="" asp-controller="Trips" asp-action="Delete" asp-route-id="@trip.Id" class="btn btn-danger">Delete</a>
                 </td>
             </tr>            

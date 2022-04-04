@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MountainTrip.Data.Models
 {
@@ -11,8 +12,14 @@ namespace MountainTrip.Data.Models
 
         [Required]
         [MaxLength(TimeMaxLength)]
-        public string DateTime { get; set; }
+        public string Time { get; set; }
 
-        public IEnumerable<Trip> Trips { get; init; } = new HashSet<Trip>();
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public byte PeopleCount { get; set; }
+
+        public ICollection<TripBooking> TripsBookings { get; set; } = new HashSet<TripBooking>();
     }
 }

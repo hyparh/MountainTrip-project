@@ -13,6 +13,7 @@ namespace MountainTrip.Services.Trips
         [Display(Name = "Search trip by name:")]
         public string Searching { get; init; }
 
+        [Display(Name = "Sort by:")]
         public TripSorting Sorting { get; init; }
 
         public int CurrentPage { get; init; } = 1;

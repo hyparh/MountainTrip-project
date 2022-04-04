@@ -15,10 +15,15 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-color: #e6ffcc;
+    background-color: #f2f2f2;
 }
 
 #geolocation {
     top: 30px;
     margin-right: 55px;
+}
+
+#equipment {
+    float: left;    
+    margin-right: 30px;
 }

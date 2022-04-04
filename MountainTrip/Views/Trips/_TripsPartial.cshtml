@@ -1,4 +1,17 @@
-﻿@model IEnumerable<TripServiceModel>
+﻿@inject IGuideService Guides
+
+@{
+    var userId = String.Empty;
+    var userIsGuide = false;
+}
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        userId = User.Id();
+        userIsGuide = Guides.IsGuide(userId);
+    }
+}
 
 <div class="row">
     @foreach(var trip in Model)
@@ -8,7 +21,18 @@
               <img height="300" src="@trip.ImageUrl" class="card-img-top" alt="@trip.Name @trip.Difficulty - @trip.Duration @trip.Length">
               <div class="card-body text-center">
               <h5 class="card-title text-center">@trip.Name, @trip.Difficulty, @trip.Duration, @trip.Length</h5>           
-              <a asp-controller="Trips" asp-action="Details" asp-route-id="@trip.Id" asp-route-info="@(trip.Name + ", " + trip.Duration + ", " + trip.Length)" class="btn btn-primary">View Details</a>
+              <a asp-controller="Trips" 
+              asp-action="Details" 
+              asp-route-id="@trip.Id" 
+              asp-route-info="@(trip.Name + ", " + trip.Duration + ", " + trip.Length)" class="btn btn-primary">View Details</a>                    
+                    @if (!User.IsAdmin() && !userIsGuide)
+                    {
+                        <a asp-controller="Trips"
+                        asp-action="AddBooking" 
+                        asp-route-id="@trip.Id" 
+                        asp-route-info="@(trip.Name + ", " + trip.Duration + ", " + trip.Length)" class="btn btn-success">Booking</a>
+                    }
+                                        
                     @if (ViewBag.AllowTripEdit == true || User.IsAdmin())
                     {
                         <a asp-controller="Trips" asp-action="Edit" asp-route-id="@trip.Id" class="btn btn-warning">Edit</a>

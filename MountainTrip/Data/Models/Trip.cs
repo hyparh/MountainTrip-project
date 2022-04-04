@@ -23,8 +23,6 @@ namespace MountainTrip.Data.Models
         public string Duration { get; set; }
 
         public bool IsPublic { get; set; }
-
-        public bool IsDeleted { get; set; }
        
         public DifficultyTypes Difficulty { get; set; }
 
@@ -39,8 +37,6 @@ namespace MountainTrip.Data.Models
         public int GuideId { get; set; }
         public Guide Guide { get; set; }
 
-        [ForeignKey(nameof(Booking))]
-        public int BookingId { get; set; }
-        public Booking Booking { get; set; }
+        public ICollection<TripBooking> TripsBookings { get; set; } = new HashSet<TripBooking>();
     }
 }

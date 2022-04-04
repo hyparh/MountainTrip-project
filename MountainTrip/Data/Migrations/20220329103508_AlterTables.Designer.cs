@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MountainTrip.Data;
 
@@ -11,9 +12,10 @@ using MountainTrip.Data;
 namespace MountainTrip.Data.Migrations
 {
     [DbContext(typeof(MountainTripDbContext))]
-    partial class MountainTripDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220329103508_AlterTables")]
+    partial class AlterTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,9 +169,6 @@ namespace MountainTrip.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<byte>("PeopleCount")
-                        .HasColumnType("tinyint");
-
                     b.Property<string>("Time")
                         .IsRequired()
                         .HasMaxLength(8)
@@ -240,6 +239,9 @@ namespace MountainTrip.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("BookingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -258,6 +260,9 @@ namespace MountainTrip.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
@@ -274,26 +279,13 @@ namespace MountainTrip.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BookingId");
+
                     b.HasIndex("GuideId");
 
                     b.HasIndex("MountainId");
 
                     b.ToTable("Trips");
-                });
-
-            modelBuilder.Entity("MountainTrip.Data.Models.TripBooking", b =>
-                {
-                    b.Property<int>("TripId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookingId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TripId", "BookingId");
-
-                    b.HasIndex("BookingId");
-
-                    b.ToTable("TripsBookings");
                 });
 
             modelBuilder.Entity("MountainTrip.Data.Models.User", b =>
@@ -427,6 +419,12 @@ namespace MountainTrip.Data.Migrations
 
             modelBuilder.Entity("MountainTrip.Data.Models.Trip", b =>
                 {
+                    b.HasOne("MountainTrip.Data.Models.Booking", "Booking")
+                        .WithMany("Trips")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MountainTrip.Data.Models.Guide", "Guide")
                         .WithMany("Trips")
                         .HasForeignKey("GuideId")
@@ -439,33 +437,16 @@ namespace MountainTrip.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Booking");
+
                     b.Navigation("Guide");
 
                     b.Navigation("Mountain");
                 });
 
-            modelBuilder.Entity("MountainTrip.Data.Models.TripBooking", b =>
-                {
-                    b.HasOne("MountainTrip.Data.Models.Booking", "Booking")
-                        .WithMany("TripsBookings")
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MountainTrip.Data.Models.Trip", "Trip")
-                        .WithMany("TripsBookings")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Booking");
-
-                    b.Navigation("Trip");
-                });
-
             modelBuilder.Entity("MountainTrip.Data.Models.Booking", b =>
                 {
-                    b.Navigation("TripsBookings");
+                    b.Navigation("Trips");
                 });
 
             modelBuilder.Entity("MountainTrip.Data.Models.Guide", b =>
@@ -476,11 +457,6 @@ namespace MountainTrip.Data.Migrations
             modelBuilder.Entity("MountainTrip.Data.Models.Mountain", b =>
                 {
                     b.Navigation("Trips");
-                });
-
-            modelBuilder.Entity("MountainTrip.Data.Models.Trip", b =>
-                {
-                    b.Navigation("TripsBookings");
                 });
 #pragma warning restore 612, 618
         }

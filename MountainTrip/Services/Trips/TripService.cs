@@ -72,21 +72,13 @@ namespace MountainTrip.Services.Trips
         public TripDetailsServiceModel Details(int id)
             => data.Trips
             .Where(t => t.Id == id)
+            .ProjectTo<TripDetailsServiceModel>(mapper.ConfigurationProvider)            
+            .FirstOrDefault();
+
+        public TripDetailsServiceModel AddBooking(int id)
+            => data.Trips
+            .Where(t => t.Id == id)
             .ProjectTo<TripDetailsServiceModel>(mapper.ConfigurationProvider)
-            //.Select(t => new TripDetailsServiceModel 
-            //{
-            //    Id = t.Id,
-            //    Name = t.Name,
-            //    Description = t.Description,
-            //    Difficulty = t.Difficulty.ToString(),
-            //    Duration = t.Duration,
-            //    ImageUrl = t.ImageUrl,
-            //    Length = t.Length,
-            //    GuideId = t.GuideId,
-            //    GuideFullName = t.Guide.FullName,
-            //    MountainId = t.MountainId,
-            //    UserId = t.Guide.UserId
-            //})
             .FirstOrDefault();
 
         public int Create(
@@ -202,6 +194,6 @@ namespace MountainTrip.Services.Trips
         private IEnumerable<TripServiceModel> GetTrips(IQueryable<Trip> tripQuery)
             => tripQuery
             .ProjectTo<TripServiceModel>(mapper.ConfigurationProvider)
-            .ToList();
+            .ToList();       
     }
 }

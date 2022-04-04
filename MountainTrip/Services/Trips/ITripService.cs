@@ -7,14 +7,14 @@ namespace MountainTrip.Services.Trips
         TripQueryServiceModel All(
             string name = null,
             string searching = null,
-            TripSorting sorting = TripSorting.TripName, //TODO: Is it good here?
+            TripSorting sorting = TripSorting.TripName,
             int currentPage = 1,
             int tripsPerPage = int.MaxValue,
             bool publicOnly = true);
 
-        //IEnumerable<LatestTripServiceModel> Latest();
-
-        TripDetailsServiceModel Details(int id);        
+        TripDetailsServiceModel Details(int id);       
+        
+        TripDetailsServiceModel AddBooking(int id);        
 
         int Create(string name,
                 string description,

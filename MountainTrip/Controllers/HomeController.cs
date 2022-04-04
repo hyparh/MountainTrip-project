@@ -41,6 +41,7 @@ namespace MountainTrip.Controllers
             {
                 TotalTrips = totalStatistics.TotalTrips,
                 TotalUsers = totalStatistics.TotalUsers,
+                TotalBookings = totalStatistics.TotalBookings,
                 Trips = trips
             });
         }        

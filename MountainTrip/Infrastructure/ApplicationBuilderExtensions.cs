@@ -43,10 +43,11 @@ namespace MountainTrip.Infrastructure
             data.Mountains.AddRange(new[]
             {
                 new Mountain { Name = "Vitosha"},
-                new Mountain { Name = "Stara planina"},
+                new Mountain { Name = "Stara Planina"},
                 new Mountain { Name = "Rila"},
                 new Mountain { Name = "Pirin"},
-                new Mountain { Name = "Rodopi"}
+                new Mountain { Name = "Rhodope"},
+                new Mountain { Name = "Lozenska Planina"}
             });
 
             data.SaveChanges();

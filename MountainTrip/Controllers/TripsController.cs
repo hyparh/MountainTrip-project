@@ -4,17 +4,23 @@ using MountainTrip.Infrastructure;
 using MountainTrip.Services.Trips;
 using MountainTrip.Services.Guides;
 using AutoMapper;
+using MountainTrip.Models.Bookings;
+using MountainTrip.Data.Models;
+using MountainTrip.Data;
+using MountainTrip.Services.Bookings;
 
 namespace MountainTrip.Controllers
 {
     public class TripsController : Controller
     {
+        private readonly MountainTripDbContext data;
         private readonly ITripService trips;
         private readonly IGuideService guides;
         private readonly IMapper mapper;
 
-        public TripsController(ITripService trips, IGuideService guides, IMapper mapper)
+        public TripsController(MountainTripDbContext data, ITripService trips, IGuideService guides, IMapper mapper)
         {
+            this.data = data;
             this.trips = trips;
             this.guides = guides;
             this.mapper = mapper;
@@ -110,7 +116,7 @@ namespace MountainTrip.Controllers
 
             return RedirectToAction(nameof(Details), new 
             { 
-                id = tripId, info = trip.Name + ", " + trip.Duration + ", " + trip.Length 
+                id = tripId, info = trip.Name + ", " + trip.Duration + ", " + trip.Length
             });
         }
 
@@ -182,7 +188,45 @@ namespace MountainTrip.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(Details), new { id, info = trip.Name + ", " + trip.Duration + ", " + trip.Length });
+            return RedirectToAction(nameof(Details), new { id, info = trip.Name + ", " + trip.Duration + ", " + trip.Length});
+        }
+
+        [Authorize]
+        public IActionResult AddBooking()
+        {
+            // It requires TripDetailsServiceModel to work. Why???
+
+            //return View(new TripDetailsServiceModel
+            //{
+            //    Name = "Name",
+            //    MountainName = "Himalaya",
+            //    Duration = "123h:44п"
+            //});
+
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult AddBooking(BookingFormModel booking)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(booking);
+            }
+
+
+
+            var bookingData = new Booking
+            {
+                Time = booking.Time,
+                PeopleCount = booking.PeopleCount
+            };
+
+            data.Bookings.Add(bookingData);
+            data.SaveChanges();
+
+            return RedirectToAction("All", "Trips");
         }
     }
 }

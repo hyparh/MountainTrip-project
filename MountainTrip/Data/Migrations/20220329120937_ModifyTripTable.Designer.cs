@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MountainTrip.Data;
 
@@ -11,9 +12,10 @@ using MountainTrip.Data;
 namespace MountainTrip.Data.Migrations
 {
     [DbContext(typeof(MountainTripDbContext))]
-    partial class MountainTripDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220329120937_ModifyTripTable")]
+    partial class ModifyTripTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,9 +169,6 @@ namespace MountainTrip.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<byte>("PeopleCount")
-                        .HasColumnType("tinyint");
-
                     b.Property<string>("Time")
                         .IsRequired()
                         .HasMaxLength(8)
@@ -257,6 +256,9 @@ namespace MountainTrip.Data.Migrations
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");

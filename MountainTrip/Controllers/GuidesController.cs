@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
+using MountainTrip.Services.Bookings;
 using MountainTrip.Services.Guides;
 
 namespace MountainTrip.Controllers
@@ -10,9 +11,14 @@ namespace MountainTrip.Controllers
     public class GuidesController : Controller
     {
         private readonly MountainTripDbContext data;
+        private readonly IBookingService booking;
 
-        public GuidesController(MountainTripDbContext data)
-            => this.data = data;
+
+        public GuidesController(MountainTripDbContext data, IBookingService booking)
+        {
+            this.data = data;
+            this.booking = booking;
+        }
 
         [Authorize]
         public IActionResult Create() => View();

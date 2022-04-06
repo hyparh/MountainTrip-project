@@ -7,6 +7,7 @@ using AutoMapper;
 using MountainTrip.Models.Bookings;
 using MountainTrip.Data.Models;
 using MountainTrip.Data;
+using System.Globalization;
 using MountainTrip.Services.Bookings;
 
 namespace MountainTrip.Controllers
@@ -16,14 +17,21 @@ namespace MountainTrip.Controllers
         private readonly MountainTripDbContext data;
         private readonly ITripService trips;
         private readonly IGuideService guides;
-        private readonly IMapper mapper;
+        private readonly IMapper mapper;       
+        private readonly IBookingService bookings;       
 
-        public TripsController(MountainTripDbContext data, ITripService trips, IGuideService guides, IMapper mapper)
+        public TripsController(
+            MountainTripDbContext data,
+            ITripService trips, 
+            IGuideService guides, 
+            IMapper mapper,
+            IBookingService bookings)
         {
             this.data = data;
             this.trips = trips;
             this.guides = guides;
             this.mapper = mapper;
+            this.bookings = bookings;
         }
 
         public IActionResult All([FromQuery] AllTripsQueryModel query)
@@ -43,6 +51,8 @@ namespace MountainTrip.Controllers
 
             return View(query);
         }
+
+        // visualizes each guide's trips
 
         [Authorize]
         public IActionResult Mine()
@@ -74,6 +84,8 @@ namespace MountainTrip.Controllers
 
             return View(new TripFormModel
             {
+                // Mountains is IEnumerable collection
+
                 Mountains = trips.AllMountains()
             });
         }
@@ -194,16 +206,13 @@ namespace MountainTrip.Controllers
         [Authorize]
         public IActionResult AddBooking()
         {
-            // It requires TripDetailsServiceModel to work. Why???
-
-            //return View(new TripDetailsServiceModel
-            //{
-            //    Name = "Name",
-            //    MountainName = "Himalaya",
-            //    Duration = "123h:44п"
-            //});
-
-            return View();
+            var booking = new BookingFormModel { };
+           
+            return View(booking = new BookingFormModel
+            {
+                Time = booking.Time,
+                PeopleCount = booking.PeopleCount
+            });
         }
 
         [HttpPost]
@@ -215,18 +224,43 @@ namespace MountainTrip.Controllers
                 return View(booking);
             }
 
-
+            bool isTimeValid = DateTime.TryParseExact(booking.Time, "HH:mm",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime time);
 
             var bookingData = new Booking
             {
-                Time = booking.Time,
-                PeopleCount = booking.PeopleCount
+                Time = time.ToString("HH:mm"),
+                PeopleCount = booking.PeopleCount,
+                UserId = User.Id()
             };
 
             data.Bookings.Add(bookingData);
             data.SaveChanges();
 
             return RedirectToAction("All", "Trips");
+        }
+
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var guideId = guides.IdByUser(this.User.Id());
+
+            if (!trips.IsByGuide(id, guideId) && !User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
+            trips.Delete(id);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        [Authorize]
+        public IActionResult MyBookings(BookingServiceModel query)
+        {            
+            var bookingsQuery = bookings.MyBookings(query.Time, query.PeopleCount, query.UserId);
+
+            return View(query);
         }
     }
 }

@@ -3,6 +3,8 @@ using AutoMapper.QueryableExtensions;
 using MountainTrip.Data;
 using MountainTrip.Data.Enums;
 using MountainTrip.Data.Models;
+using MountainTrip.Models.Bookings;
+using MountainTrip.Services.Bookings;
 
 namespace MountainTrip.Services.Trips
 {
@@ -194,6 +196,23 @@ namespace MountainTrip.Services.Trips
         private IEnumerable<TripServiceModel> GetTrips(IQueryable<Trip> tripQuery)
             => tripQuery
             .ProjectTo<TripServiceModel>(mapper.ConfigurationProvider)
-            .ToList();       
+            .ToList();      
+
+        public IEnumerable<BookingServiceModel> MyBookings()
+            => data.Bookings
+              .ProjectTo<BookingServiceModel>(mapper.ConfigurationProvider)
+              .ToList();
+
+        public void Delete(int id)
+        {
+            var tripToRemove = this.data
+                .Trips
+                .Where(c => c.Id == id)
+                .FirstOrDefault();
+
+            data.Trips.Remove(tripToRemove);
+
+            data.SaveChanges();
+        }
     }
 }

@@ -46,16 +46,6 @@ namespace MountainTrip.Data
                 e.HasKey(pk => new { pk.TripId, pk.BookingId });
             });
 
-            //builder.Entity<Trip>()
-            //       .HasOne(c => c.Booking)
-            //       .WithMany()
-            //       .OnDelete(DeleteBehavior.Restrict);
-
-            //builder.Entity<Booking>()
-            //       .HasOne(s => s.TripsBookings)
-            //       .WithMany()                   
-            //       .OnDelete(DeleteBehavior.Restrict);
-
             base.OnModelCreating(builder);
         }
     }

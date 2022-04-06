@@ -17,7 +17,5 @@
         public string MountainName { get; init; }
 
         public bool IsPublic { get; init; }
-
-        public bool IsDeleted { get; init; }
     }
 }

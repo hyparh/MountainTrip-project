@@ -1,4 +1,6 @@
 ﻿using MountainTrip.Data.Enums;
+using MountainTrip.Models.Bookings;
+using MountainTrip.Services.Bookings;
 
 namespace MountainTrip.Services.Trips
 {
@@ -12,9 +14,7 @@ namespace MountainTrip.Services.Trips
             int tripsPerPage = int.MaxValue,
             bool publicOnly = true);
 
-        TripDetailsServiceModel Details(int id);       
-        
-        TripDetailsServiceModel AddBooking(int id);        
+        TripDetailsServiceModel Details(int id);                  
 
         int Create(string name,
                 string description,
@@ -37,16 +37,18 @@ namespace MountainTrip.Services.Trips
                 TripFormModel trip,
                 bool isPublic);
 
+        void Delete(int id);
+
         IEnumerable<TripServiceModel> ByUser(string userId);
 
         IEnumerable<string> AllNames();
 
-        IEnumerable<TripMountainServiceModel> AllMountains();
+        IEnumerable<TripMountainServiceModel> AllMountains();       
 
         bool MountainExists(int mountainId);
 
         bool IsByGuide(int tripId, int guideId);
 
-        void ChangeVisibility(int tripId);
+        void ChangeVisibility(int tripId);       
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MountainTrip.Data;
+using MountainTrip.Models.Bookings;
 using MountainTrip.Services.Trips;
 
 namespace MountainTrip.Services.Bookings
@@ -14,7 +15,7 @@ namespace MountainTrip.Services.Bookings
         {
             this.data = data;
             this.mapper = mapper;
-        }
+        }       
 
         public int UserId(string userId)
             => data.Bookings
@@ -22,10 +23,14 @@ namespace MountainTrip.Services.Bookings
                 .Select(g => g.Id)
                 .FirstOrDefault();
 
-        public TripDetailsServiceModel Details(int id)
-            => data.Trips
-            .Where(t => t.Id == id)
-            .ProjectTo<TripDetailsServiceModel>(mapper.ConfigurationProvider)
-            .FirstOrDefault();
+        public BookingServiceModel MyBookings(string time, byte peopleCount, string userId)
+        {
+            return new BookingServiceModel
+            {
+                Time = time,
+                PeopleCount = peopleCount,
+                UserId = userId
+            };
+        }
     }
 }

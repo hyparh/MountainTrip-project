@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MountainTrip.Data.Models;
+using MountainTrip.Services.Bookings;
 using MountainTrip.Services.Trips;
 
 namespace MountainTrip.Infrastructure
@@ -9,6 +10,8 @@ namespace MountainTrip.Infrastructure
         public MappingProfile()
         {
             CreateMap<Mountain, TripMountainServiceModel>();
+
+            CreateMap<Booking, BookingServiceModel>();
 
             CreateMap<TripDetailsServiceModel, TripFormModel>();
             CreateMap<Trip, LatestTripServiceModel>();

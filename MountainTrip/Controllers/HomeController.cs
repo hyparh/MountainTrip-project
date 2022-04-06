@@ -28,6 +28,7 @@ namespace MountainTrip.Controllers
         {
             var totalTrips = data.Trips.Count();
             var totalUsers = data.Users.Count();
+            var totalBookings = data.Bookings.Count();
 
             var trips = data.Trips
                 .OrderByDescending(t => t.Id)

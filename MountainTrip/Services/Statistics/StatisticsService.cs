@@ -13,11 +13,13 @@ namespace Services.Statistics
         {
             var totalTrips = data.Trips.Count(t => t.IsPublic);
             var totalUsers = data.Users.Count();
+            var totalBookings = data.Bookings.Count();
 
             return new StatisticsServiceModel 
             {
                 TotalTrips = totalTrips,
-                TotalUsers = totalUsers
+                TotalUsers = totalUsers,
+                TotalBookings = totalBookings
             };
         }
     }

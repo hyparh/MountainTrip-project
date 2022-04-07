@@ -20,11 +20,11 @@
             <div class="card mb-4">
               <img height="300" src="@trip.ImageUrl" class="card-img-top" alt="@trip.Name @trip.Difficulty - @trip.Duration @trip.Length">
               <div class="card-body text-center">
-              <h5 class="card-title text-center">@trip.Name, @trip.Difficulty, @trip.Duration, @trip.Length</h5>           
+              <h5 class="card-title text-center">@trip.Name</h5> <br>      
               <a asp-controller="Trips" 
               asp-action="Details" 
               asp-route-id="@trip.Id" 
-              asp-route-info="@(trip.Name + ", " + trip.Duration + ", " + trip.Length)" class="btn btn-primary">View Details</a>                    
+              asp-route-info="@(trip.Name + ", " + trip.Duration + ", " + trip.Length)" class="btn btn-info">View Details</a>                    
                     @if (!User.IsAdmin() && !userIsGuide)
                     {
                         <a asp-controller="Trips"

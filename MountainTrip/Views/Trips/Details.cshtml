@@ -1,7 +1,7 @@
 ﻿@model TripDetailsServiceModel
 
 <div class="col-md-6 offset-3">
-    <h2>        
+    <h3>        
         <p style="color:blue">
             Route: 
             <span style="color: black">@Model.Name</span> <br>
@@ -9,11 +9,13 @@
             <span style="color: black">@Model.MountainName</span> <br>
             Duration:
             <span style="color: black">@Model.Duration</span> <br>
+            Difficulty:
+            <span style="color: black">@Model.Difficulty</span> <br>
             Length:
             <span style="color: black">@Model.Length km</span> <br> <br>
             Giude:
             <span style="color: black">@Model.GuideFullName</span> <br> <br>
             <img height="500" src="@Model.ImageUrl" />
         </p>                     
-    </h2>
+    </h3>
 </div>

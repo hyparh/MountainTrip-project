@@ -21,7 +21,7 @@ namespace MountainTrip.Infrastructure
 
             CreateMap<Trip, TripDetailsServiceModel>()
                 .ForMember(t => t.UserId, cfg => cfg.MapFrom(t => t.Guide.UserId))
-                .ForMember(t => t.MountainName, cfg => cfg.MapFrom(t => t.Mountain.Name));        
+                .ForMember(t => t.MountainName, cfg => cfg.MapFrom(t => t.Mountain.Name));
         }
     }
 }

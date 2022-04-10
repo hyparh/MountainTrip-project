@@ -1,5 +1,6 @@
 ﻿@using MountainTrip.Services.Bookings
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model BookingFormModel
 
 @inject IGuideService Guides
 
@@ -16,133 +17,9 @@
     }
 }
 
-@model BookingFormModel
-
-@* <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Monday</th>
-      <th scope="col">Tuesday</th>
-      <th scope="col">Wednesday</th>
-      <th scope="col">Thursday</th>
-      <th scope="col">Friday</th>
-      <th scope="col">Saturday</th>
-      <th scope="col">Sunday</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td scope="col">
-          <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-8">
-            <div class="mb-3">
-              <label asp-for="Time" class="form-label"></label>
-              <input asp-for="Time" class="form-control">
-              <span asp-validation-for="Time" class="small text-danger"></span>
-            </div>
-            <div class="mb-3">
-              <label asp-for="PeopleCount" class="form-label"></label>
-              <input asp-for="PeopleCount" class="form-control">
-              <span asp-validation-for="PeopleCount" class="small text-danger"></span>        
-            </div>   
-          </div>
-        </td>
-        <td scope="col">
-          <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-8">
-            <div class="mb-3">
-              <label asp-for="Time" class="form-label"></label>
-              <input asp-for="Time" class="form-control">
-              <span asp-validation-for="Time" class="small text-danger"></span>
-            </div>
-            <div class="mb-3">
-              <label asp-for="PeopleCount" class="form-label"></label>
-              <input asp-for="PeopleCount" class="form-control">
-              <span asp-validation-for="PeopleCount" class="small text-danger"></span>        
-            </div>   
-          </div>
-        </td>
-        <td scope="col">
-          <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-8">
-            <div class="mb-3">
-              <label asp-for="Time" class="form-label"></label>
-              <input asp-for="Time" class="form-control">
-              <span asp-validation-for="Time" class="small text-danger"></span>
-            </div>
-            <div class="mb-3">
-              <label asp-for="PeopleCount" class="form-label"></label>
-              <input asp-for="PeopleCount" class="form-control">
-              <span asp-validation-for="PeopleCount" class="small text-danger"></span>        
-            </div>   
-          </div>
-        </td>
-        <td scope="col">
-          <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-8">
-            <div class="mb-3">
-              <label asp-for="Time" class="form-label"></label>
-              <input asp-for="Time" class="form-control">
-              <span asp-validation-for="Time" class="small text-danger"></span>
-            </div>
-            <div class="mb-3">
-              <label asp-for="PeopleCount" class="form-label"></label>
-              <input asp-for="PeopleCount" class="form-control">
-              <span asp-validation-for="PeopleCount" class="small text-danger"></span>        
-            </div>   
-          </div>
-        </td>
-        <td scope="col">
-          <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-8">
-            <div class="mb-3">
-              <label asp-for="Time" class="form-label"></label>
-              <input asp-for="Time" class="form-control">
-              <span asp-validation-for="Time" class="small text-danger"></span>
-            </div>
-            <div class="mb-3">
-              <label asp-for="PeopleCount" class="form-label"></label>
-              <input asp-for="PeopleCount" class="form-control">
-              <span asp-validation-for="PeopleCount" class="small text-danger"></span>        
-            </div>   
-          </div>
-        </td>
-        <td scope="col">
-          <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-8">
-            <div class="mb-3">
-              <label asp-for="Time" class="form-label"></label>
-              <input asp-for="Time" class="form-control">
-              <span asp-validation-for="Time" class="small text-danger"></span>
-            </div>
-            <div class="mb-3">
-              <label asp-for="PeopleCount" class="form-label"></label>
-              <input asp-for="PeopleCount" class="form-control">
-              <span asp-validation-for="PeopleCount" class="small text-danger"></span>        
-            </div>   
-          </div>
-        </td>
-        <td scope="col">
-          <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-8">
-            <div class="mb-3">
-              <label asp-for="Time" class="form-label"></label>
-              <input asp-for="Time" class="form-control">
-              <span asp-validation-for="Time" class="small text-danger"></span>
-            </div>
-            <div class="mb-3">
-              <label asp-for="PeopleCount" class="form-label"></label>
-              <input asp-for="PeopleCount" class="form-control">
-              <span asp-validation-for="PeopleCount" class="small text-danger"></span>        
-            </div>   
-          </div>
-        </td>
-    </tr>
-  </tbody>
-</table>*@
-
-
-@{
-ViewBag.Title = "Make your booking";
-}
-
-<h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
-
-<div class="row">
+@if (userIsGuide)
+{
+    <div class="row">
     <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-2">
 
         <form method="post">
@@ -154,11 +31,65 @@ ViewBag.Title = "Make your booking";
             <div class="mb-3">
               <label asp-for="PeopleCount" class="form-label"></label>
               <input asp-for="PeopleCount" class="form-control">
-              <span asp-validation-for="PeopleCount" class="small text-danger"></span>
-              <div class="d-grid d-md-block mt-3">
-                <button class="btn btn-primary" type="submit">Save</button>                  
-              </div>
-            </div>    
+              <span asp-validation-for="PeopleCount" class="small text-danger"></span>    
+            </div> 
+            <div class="mb-3">
+              <label asp-for="DayOfWeek" class="form-label"></label>            
+              <select asp-for="DayOfWeek" class="form-control" asp-items="Html.GetEnumSelectList<DayOfWeek>()">                
+              </select>  
+            </div>
+            <div class="d-grid d-md-block mt-3">
+              <button class="btn btn-primary" type="submit">Save</button>                  
+            </div>               
         </form>
+
     </div>
 </div>
+}
+else
+{
+ViewBag.Title = "Make your booking";
+
+<h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
+
+ <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Day</th>
+      <th scope="col">Booking</th>     
+      <td scope="col"></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Monday</th>
+      <td><a asp-area="" asp-controller="Trips" asp-action="Edit" asp-route-id="@Model.TripId" class="btn btn-warning ">09:00</a></td>
+      <td><a asp-area="" asp-controller="Trips" asp-action="Edit" asp-route-id="@Model.TripId" class="btn btn-warning ">11:00</a></td>
+    </tr>
+    <tr>
+      <th scope="row">Tuesday</th>
+      <td>Booking Button Here</td>
+    </tr>
+    <tr>
+      <th scope="row">Wednesday</th>
+      <td>Booking Button Here</td>
+    </tr>
+    <tr>
+      <th scope="row">Thursday</th>
+      <td>Booking Button Here</td>
+    </tr>
+    <tr>
+      <th scope="row">Friday</th>
+      <td>Booking Button Here</td>
+    </tr>
+    <tr>
+      <th scope="row">Saturday</th>
+      <td>Booking Button Here</td>
+    </tr>
+    <tr>
+      <th scope="row">Sunday</th>
+      <td>Booking Button Here</td>
+    </tr>
+  </tbody>
+</table>
+}

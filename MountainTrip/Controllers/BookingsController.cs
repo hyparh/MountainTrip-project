@@ -22,10 +22,13 @@ namespace MountainTrip.Controllers
         {
             var booking = new BookingFormModel { };
 
+            bool IsDayOfWeekValid = Enum.TryParse(typeof(DayOfWeek),
+                booking.DayOfWeek, out object parsedDayOfWeek);
+
             return View(booking = new BookingFormModel
             {
                 Time = booking.Time,
-                PeopleCount = booking.PeopleCount
+                PeopleCount = booking.PeopleCount,
             });
         }
 
@@ -41,11 +44,16 @@ namespace MountainTrip.Controllers
             bool isTimeValid = DateTime.TryParseExact(booking.Time, "HH:mm",
                     CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime time);
 
+            bool IsDayOfWeekValid = Enum.TryParse(typeof(DayOfWeek),
+                booking.DayOfWeek, out object parsedDayOfWeek);
+
             var bookingData = new Booking
             {
                 Time = time.ToString("HH:mm"),
                 PeopleCount = booking.PeopleCount,
-                UserId = User.Id()
+                UserId = User.Id(),
+                TripId = booking.TripId,
+                DayOfWeek = (DayOfWeek)parsedDayOfWeek
             };
 
             data.Bookings.Add(bookingData);

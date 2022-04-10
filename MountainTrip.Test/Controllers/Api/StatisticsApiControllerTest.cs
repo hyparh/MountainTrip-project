@@ -1,12 +1,12 @@
 ﻿using MountainTrip.Controllers.Api;
 using MountainTrip.Test.Mocks;
-using Xunit;
+using NUnit.Framework;
 
 namespace MountainTrip.Test.Controllers.Api
 {
     public class StatisticsApiControllerTest
     {
-        [Fact]
+        [Test]
         public void GetStatisticsShouldReturnTotalStatisticks()
         {
             // Arrange
@@ -17,9 +17,9 @@ namespace MountainTrip.Test.Controllers.Api
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(3, result.TotalTrips);
-            Assert.Equal(4, result.TotalUsers);
-            Assert.Equal(5, result.TotalBookings);
+            Assert.That(3, Is.EqualTo(result.TotalTrips));
+            Assert.That(4, Is.EqualTo(result.TotalUsers));
+            Assert.That(5, Is.EqualTo(result.TotalBookings));
         }
     }
 }

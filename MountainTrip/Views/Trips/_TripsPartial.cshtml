@@ -13,6 +13,8 @@
     }
 }
 
+<h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
+
 <div class="row">
     @foreach(var trip in Model)
     {
@@ -33,10 +35,15 @@
                         asp-route-info="@(trip.Name + ", " + trip.Duration + ", " + trip.Length)" class="btn btn-success">Booking</a>
                     }
                                         
-                    @if (ViewBag.AllowTripEdit == true || User.IsAdmin())
+                    @if (ViewBag.AllowTripEdit is true || User.IsAdmin())
                     {
                         <a asp-controller="Trips" asp-action="Edit" asp-route-id="@trip.Id" class="btn btn-warning">Edit</a>
-                        <a asp-controller="Trips" asp-action="Delete" asp-route-id="@trip.Id" class="btn btn-danger" onclick="return confirm("Are you sure you want to delete this trip?")">Delete</a>
+                        <a asp-controller="Trips" asp-action="Delete" asp-route-id="@trip.Id" class="btn btn-danger">Delete</a>                       
+                    }      
+                    
+                    @if (ViewBag.AllowTripEdit is true && userIsGuide)
+                    {
+                        <a asp-controller="Trips" asp-action="AddBooking" asp-route-id="@trip.Id" class="btn btn-success">Add Booking</a>
                     }
                 </div>
             </div>

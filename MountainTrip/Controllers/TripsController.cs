@@ -18,7 +18,7 @@ namespace MountainTrip.Controllers
         private readonly ITripService trips;
         private readonly IGuideService guides;
         private readonly IMapper mapper;       
-        private readonly IBookingService bookings;       
+        private readonly IBookingService bookings;
 
         public TripsController(
             MountainTripDbContext data,
@@ -33,7 +33,7 @@ namespace MountainTrip.Controllers
             this.mapper = mapper;
             this.bookings = bookings;
         }
-
+     
         public IActionResult All([FromQuery] AllTripsQueryModel query)
         {
             var queryResult = trips.All(
@@ -64,11 +64,11 @@ namespace MountainTrip.Controllers
 
         public IActionResult Details(int id, string info)
         {
-            var trip = trips.Details(id);
+            TripDetailsServiceModel trip = trips.Details(id);
 
             if (!info.Contains(trip.Name))
             {
-                return BadRequest(); // TODO check why this does not work
+                return BadRequest();
             }
 
             return View(trip);
@@ -201,13 +201,13 @@ namespace MountainTrip.Controllers
             }
 
             return RedirectToAction(nameof(Details), new { id, info = trip.Name + ", " + trip.Duration + ", " + trip.Length});
-        }
+        }      
 
         [Authorize]
         public IActionResult AddBooking()
         {
-            var booking = new BookingFormModel { };
-           
+            var booking = new BookingFormModel { };            
+
             return View(booking = new BookingFormModel
             {
                 Time = booking.Time,
@@ -217,24 +217,38 @@ namespace MountainTrip.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult AddBooking(BookingFormModel booking)
+        public IActionResult AddBooking(BookingFormModel booking, TripDetailsServiceModel tripDetails)
         {
             if (!ModelState.IsValid)
             {
                 return View(booking);
             }
 
+            int tripId = tripDetails.Id;
+
             bool isTimeValid = DateTime.TryParseExact(booking.Time, "HH:mm",
                     CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime time);
 
-            var bookingData = new Booking
+            bool IsDayOfWeekValid = Enum.TryParse(typeof(DayOfWeek),
+                booking.DayOfWeek, out object parsedDayOfWeek);
+
+            Booking bookingData = new Booking
             {
                 Time = time.ToString("HH:mm"),
                 PeopleCount = booking.PeopleCount,
-                UserId = User.Id()
+                UserId = User.Id(),
+                TripId = tripId, // this one is 0
+                DayOfWeek = (DayOfWeek)parsedDayOfWeek,
+            };
+          
+            TripBooking mappingTable = new TripBooking
+            {
+                Booking = bookingData,
+                TripId = tripId
             };
 
             data.Bookings.Add(bookingData);
+            data.TripsBookings.Add(mappingTable);
             data.SaveChanges();
 
             return RedirectToAction("All", "Trips");

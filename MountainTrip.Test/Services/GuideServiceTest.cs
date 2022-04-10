@@ -2,42 +2,59 @@
 using MountainTrip.Data.Models;
 using MountainTrip.Services.Guides;
 using MountainTrip.Test.Mocks;
-using Xunit;
+using NUnit.Framework;
+using FakeItEasy;
 
 namespace MountainTrip.Test.Services
 {
+    [TestFixture]
     public class GuideServiceTest
     {
-        [Fact]
+        [Test]
         public void IsGuideShouldReturnTrueWhenIsGuide()
         {
             // Arrange
-            var guideService = GetGuideService();
+            IGuideService guideService = GetGuideService();
 
             // Act
-            var result = guideService.IsGuide("TestUserId");
+            bool result = guideService.IsGuide("TestUserId");
 
             // Assert
-            Assert.True(result);
+            Assert.That(result, Is.True);
         }
 
-        [Fact]
+        [Test]
         public void IsGuideShouldReturnFalseIfUserIsNotGuide()
         {
             // Arrange            
-            var guideService = GetGuideService();
+            IGuideService guideService = GetGuideService();
 
             // Act
-            var result = guideService.IsGuide("DifferentUserId");
+            bool result = guideService.IsGuide("DifferentUserId");
 
             // Assert
             Assert.False(result);
         }
 
+        [Test]
+        public void IdByUserShouldReturnIdOfCurrentUser()
+        {
+            IGuideService guideService = GetGuideService();
+
+            
+
+            //public int IdByUser(string userId)
+            //=> data.Guides
+            //       .Where(g => g.UserId == userId)
+            //       .Select(g => g.Id)
+            //       .FirstOrDefault();
+        }
+
+        // SetUp method
         private static IGuideService GetGuideService()
         {
             // Common Arrange
-            var data = DatabaseMock.Instance;
+            MountainTripDbContext data = DatabaseMock.Instance;
 
             data.Guides.Add(new Guide
             {

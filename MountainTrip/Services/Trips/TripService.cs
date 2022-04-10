@@ -96,12 +96,7 @@ namespace MountainTrip.Services.Trips
         {
             bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object parsedDifficulty);
 
-            if (!IsDifficultyValid) //TODO: this probably is not necessary
-            {
-                throw new InvalidDataException("Please select difficulty.");
-            }
-
-            var tripData = new Trip
+            Trip tripData = new Trip
             {
                 Name = name,
                 Description = description,

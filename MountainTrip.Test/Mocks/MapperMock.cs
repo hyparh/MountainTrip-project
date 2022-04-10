@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MountainTrip.Infrastructure;
+using Moq;
 
 namespace MountainTrip.Test.Mocks
 {
@@ -9,12 +10,13 @@ namespace MountainTrip.Test.Mocks
         {
             get
             {
-                var mapperConfiguration = new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<MappingProfile>();
-                });
+                var mapperMock = new Mock<IMapper>();
 
-                return new Mapper(mapperConfiguration);
+                mapperMock
+                    .SetupGet(m => m.ConfigurationProvider)
+                    .Returns(Mock.Of<IConfigurationProvider>());
+
+                return mapperMock.Object;
             }
         }
     }

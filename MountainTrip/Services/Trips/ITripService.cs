@@ -14,7 +14,7 @@ namespace MountainTrip.Services.Trips
             int tripsPerPage = int.MaxValue,
             bool publicOnly = true);
 
-        TripDetailsServiceModel Details(int id);                  
+        TripDetailsServiceModel Details(int id);         
 
         int Create(string name,
                 string description,

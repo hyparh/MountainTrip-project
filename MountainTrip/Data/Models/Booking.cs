@@ -17,8 +17,12 @@ namespace MountainTrip.Data.Models
         [Required]
         public string UserId { get; set; }
 
+        public int TripId { get; set; }
+
         [Required]
         public byte PeopleCount { get; set; }
+
+        public DayOfWeek DayOfWeek { get; set; }
 
         public ICollection<TripBooking> TripsBookings { get; set; } = new HashSet<TripBooking>();
     }

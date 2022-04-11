@@ -213,11 +213,6 @@ namespace MountainTrip.Controllers
                 return Unauthorized();
             }
 
-            var tripIdToDelete = data.TripsBookings
-                .Select(i => i.TripId);
-
-            tripIdToDelete = null;
-
             trips.Delete(id);
 
             return View("SuccessfulyDeleted");

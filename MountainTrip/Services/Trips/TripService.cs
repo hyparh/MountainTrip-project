@@ -203,24 +203,30 @@ namespace MountainTrip.Services.Trips
                 .Where(c => c.Id == id)
                 .FirstOrDefault();
 
-            var tripIdToRemove = this.data.TripsBookings
+            var tripIdsToRemoveFromMappingTable = this.data.TripsBookings
                 .Where(t => t.TripId == id)
-                .FirstOrDefault();
+                .ToList();
 
-            int tripIdCount = this.data.TripsBookings
+            var tripIdsToRemoveFromBookings = this.data.Bookings
                 .Where(t => t.TripId == id)
-                .Count();
+                .ToList();
 
-            if (tripIdCount > 0)
+            if (tripIdsToRemoveFromMappingTable.Any())
             {
-                //for (int i = 0; i < tripIdCount; i++)
-                //{
-                //    data.TripsBookings.Remove(tripIdToRemove); //it removes just one TripId though it iterates as many times as needed
-                //}                            
-            }
-           
-            data.Trips.Remove(tripToRemove);
+                foreach (var tripId in tripIdsToRemoveFromMappingTable)
+                {
+                    data.TripsBookings.Remove(tripId);
+                    data.SaveChanges();
+                }
 
+                foreach (var tripId in tripIdsToRemoveFromBookings)
+                {
+                    data.Bookings.Remove(tripId);
+                    data.SaveChanges();
+                }
+            }
+
+            data.Trips.Remove(tripToRemove);
             data.SaveChanges();
         }
     }

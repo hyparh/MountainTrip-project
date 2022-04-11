@@ -27,20 +27,20 @@ namespace MountainTrip.Data
                    .HasOne(m => m.Mountain)
                    .WithMany(t => t.Trips)
                    .HasForeignKey(m => m.MountainId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Trip>()
                    .HasOne(m => m.Guide)
                    .WithMany(g => g.Trips)
                    .HasForeignKey(t => t.GuideId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Guide>()
                    .HasOne<User>()
                    .WithOne()
                    .HasForeignKey<Guide>(g => g.UserId)
-                   .OnDelete(DeleteBehavior.Restrict);
-
+                   .OnDelete(DeleteBehavior.Cascade);
+                
             builder.Entity<TripBooking>(e =>
             {
                 e.HasKey(pk => new { pk.TripId, pk.BookingId });

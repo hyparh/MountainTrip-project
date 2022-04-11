@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using DevExpress.Data.Browsing;
 using MountainTrip.Data;
 using MountainTrip.Data.Enums;
 using MountainTrip.Data.Models;
 using MountainTrip.Models.Bookings;
 using MountainTrip.Services.Bookings;
+using System.Data;
 
 namespace MountainTrip.Services.Trips
 {
@@ -94,7 +96,8 @@ namespace MountainTrip.Services.Trips
             int guideId,
             TripFormModel trip)
         {
-            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object parsedDifficulty);
+            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), 
+                trip.Difficulty, out object parsedDifficulty);
 
             Trip tripData = new Trip
             {
@@ -127,13 +130,9 @@ namespace MountainTrip.Services.Trips
             TripFormModel trip,
             bool isPublic)
         {
-            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes), trip.Difficulty, out object parsedDifficulty);
-
-            if (!IsDifficultyValid) //TODO: this probably is not necessary
-            {
-                throw new InvalidDataException("Please select difficulty.");
-            }
-
+            bool IsDifficultyValid = Enum.TryParse(typeof(DifficultyTypes),
+                trip.Difficulty, out object parsedDifficulty);
+            
             var tripData = data.Trips.Find(id);
 
             //here we check if we have the right to edit
@@ -200,11 +199,26 @@ namespace MountainTrip.Services.Trips
 
         public void Delete(int id)
         {
-            var tripToRemove = this.data
-                .Trips
+            var tripToRemove = this.data.Trips
                 .Where(c => c.Id == id)
                 .FirstOrDefault();
 
+            var tripIdToRemove = this.data.TripsBookings
+                .Where(t => t.TripId == id)
+                .FirstOrDefault();
+
+            int tripIdCount = this.data.TripsBookings
+                .Where(t => t.TripId == id)
+                .Count();
+
+            if (tripIdCount > 0)
+            {
+                //for (int i = 0; i < tripIdCount; i++)
+                //{
+                //    data.TripsBookings.Remove(tripIdToRemove); //it removes just one TripId though it iterates as many times as needed
+                //}                            
+            }
+           
             data.Trips.Remove(tripToRemove);
 
             data.SaveChanges();

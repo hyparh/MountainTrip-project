@@ -4,14 +4,14 @@ using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
 using MountainTrip.Models.Bookings;
+using MountainTrip.Services.Trips;
 using System.Globalization;
+using System.Linq;
 
 namespace MountainTrip.Controllers
 {
     public class BookingsController : Controller
     {
-        // TODO this one doesn't work
-
         private readonly MountainTripDbContext data;
         
         public BookingsController(MountainTripDbContext data)
@@ -22,24 +22,23 @@ namespace MountainTrip.Controllers
         {
             var booking = new BookingFormModel { };
 
-            bool IsDayOfWeekValid = Enum.TryParse(typeof(DayOfWeek),
-                booking.DayOfWeek, out object parsedDayOfWeek);
-
             return View(booking = new BookingFormModel
             {
                 Time = booking.Time,
-                PeopleCount = booking.PeopleCount,
+                PeopleCount = booking.PeopleCount
             });
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult AddBooking(BookingFormModel booking)
+        public IActionResult AddBooking(BookingFormModel booking, TripDetailsServiceModel tripDetails)
         {
             if (!ModelState.IsValid)
             {
                 return View(booking);
             }
+
+            int tripId = tripDetails.Id;
 
             bool isTimeValid = DateTime.TryParseExact(booking.Time, "HH:mm",
                     CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime time);
@@ -47,19 +46,34 @@ namespace MountainTrip.Controllers
             bool IsDayOfWeekValid = Enum.TryParse(typeof(DayOfWeek),
                 booking.DayOfWeek, out object parsedDayOfWeek);
 
-            var bookingData = new Booking
+            Booking bookingData = new Booking
             {
                 Time = time.ToString("HH:mm"),
                 PeopleCount = booking.PeopleCount,
                 UserId = User.Id(),
-                TripId = booking.TripId,
-                DayOfWeek = (DayOfWeek)parsedDayOfWeek
+                TripId = tripId,
+                DayOfWeek = (DayOfWeek)parsedDayOfWeek,
+            };
+
+            TripBooking mappingTable = new TripBooking
+            {
+                Booking = bookingData,
+                TripId = tripId
             };
 
             data.Bookings.Add(bookingData);
+            data.TripsBookings.Add(mappingTable);
             data.SaveChanges();
 
             return RedirectToAction("All", "Trips");
+        }
+
+        [Authorize]
+        public IActionResult MyBookings(BookingFormModel query)
+        {
+            var trips = data.Bookings.Where(x => x.TripId == query.TripId);
+
+            return View(trips);
         }
     }
 }

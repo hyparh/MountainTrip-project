@@ -23,13 +23,13 @@ namespace MountainTrip.Data.Migrations
                         column: x => x.BookingId,
                         principalTable: "Bookings",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TripsBookings_Trips_TripId",
                         column: x => x.TripId,
                         principalTable: "Trips",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

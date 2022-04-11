@@ -29,7 +29,7 @@
               asp-route-info="@(trip.Name + ", " + trip.Duration + ", " + trip.Length)" class="btn btn-info">View Details</a>                    
                     @if (!User.IsAdmin() && !userIsGuide)
                     {
-                        <a asp-controller="Trips"
+                        <a asp-controller="Bookings"
                         asp-action="AddBooking" 
                         asp-route-id="@trip.Id" 
                         asp-route-info="@(trip.Name + ", " + trip.Duration + ", " + trip.Length)" class="btn btn-success">Booking</a>
@@ -43,7 +43,7 @@
                     
                     @if (ViewBag.AllowTripEdit is true && userIsGuide)
                     {
-                        <a asp-controller="Trips" asp-action="AddBooking" asp-route-id="@trip.Id" class="btn btn-success">Add Booking</a>
+                        <a asp-controller="Bookings" asp-action="AddBooking" asp-route-id="@trip.Id" class="btn btn-success">Add Booking</a>
                     }
                 </div>
             </div>

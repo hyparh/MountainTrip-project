@@ -34,7 +34,7 @@
         @if (User.Identity.IsAuthenticated && !userIsAdmin && !userIsGuide)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Trips" asp-action="MyBookings">My Bookings</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="MyBookings">My Bookings</a>
             </li>
         }
         

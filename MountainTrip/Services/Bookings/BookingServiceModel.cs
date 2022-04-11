@@ -5,6 +5,8 @@
         public int Id { get; init; }
        
         public string Time { get; set; }
+
+        public string DayOfWeek { get; set; }
         
         public string UserId { get; set; }
         

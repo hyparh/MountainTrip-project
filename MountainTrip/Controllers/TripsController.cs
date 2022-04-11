@@ -201,58 +201,7 @@ namespace MountainTrip.Controllers
             }
 
             return RedirectToAction(nameof(Details), new { id, info = trip.Name + ", " + trip.Duration + ", " + trip.Length});
-        }      
-
-        [Authorize]
-        public IActionResult AddBooking()
-        {
-            var booking = new BookingFormModel { };            
-
-            return View(booking = new BookingFormModel
-            {
-                Time = booking.Time,
-                PeopleCount = booking.PeopleCount
-            });
-        }
-
-        [HttpPost]
-        [Authorize]
-        public IActionResult AddBooking(BookingFormModel booking, TripDetailsServiceModel tripDetails)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(booking);
-            }
-
-            int tripId = tripDetails.Id;
-
-            bool isTimeValid = DateTime.TryParseExact(booking.Time, "HH:mm",
-                    CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime time);
-
-            bool IsDayOfWeekValid = Enum.TryParse(typeof(DayOfWeek),
-                booking.DayOfWeek, out object parsedDayOfWeek);
-
-            Booking bookingData = new Booking
-            {
-                Time = time.ToString("HH:mm"),
-                PeopleCount = booking.PeopleCount,
-                UserId = User.Id(),
-                TripId = tripId, // this one is 0
-                DayOfWeek = (DayOfWeek)parsedDayOfWeek,
-            };
-          
-            TripBooking mappingTable = new TripBooking
-            {
-                Booking = bookingData,
-                TripId = tripId
-            };
-
-            data.Bookings.Add(bookingData);
-            data.TripsBookings.Add(mappingTable);
-            data.SaveChanges();
-
-            return RedirectToAction("All", "Trips");
-        }
+        }        
 
         [Authorize]
         public IActionResult Delete(int id)
@@ -264,17 +213,14 @@ namespace MountainTrip.Controllers
                 return Unauthorized();
             }
 
+            var tripIdToDelete = data.TripsBookings
+                .Select(i => i.TripId);
+
+            tripIdToDelete = null;
+
             trips.Delete(id);
 
-            return RedirectToAction(nameof(All));
-        }
-
-        [Authorize]
-        public IActionResult MyBookings(BookingServiceModel query)
-        {            
-            var bookingsQuery = bookings.MyBookings(query.Time, query.PeopleCount, query.UserId);
-
-            return View(query);
-        }
+            return View("SuccessfulyDeleted");
+        }        
     }
 }

@@ -88,7 +88,9 @@ ViewBag.Title = "Make your booking";
     </tr>
     <tr>
       <th scope="row">Sunday</th>
-      <td>Booking Button Here</td>
+      <td>
+          <td><a asp-area="" asp-controller="Trips" asp-action="Edit" asp-route-id="@Model.TripId" class="btn btn-warning ">@Model.DayOfWeek</a></td>
+      </td>
     </tr>
   </tbody>
 </table>

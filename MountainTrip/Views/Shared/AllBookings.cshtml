@@ -1,0 +1,211 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model AllBookingsQueryModel
+@inject IGuideService Guides
+
+@{
+    var userId = String.Empty;
+    var userIsGuide = false;
+}
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        userId = User.Id();
+        userIsGuide = Guides.IsGuide(userId);
+    }
+}
+
+@if (userIsGuide || User.IsAdmin())
+{    ViewBag.Title = "All Bookings";
+
+    <h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
+
+ <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Day</th>
+      <th scope="col">Booking</th>     
+      <td scope="col"></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Monday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Monday"))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-warning">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Tuesday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Tuesday"))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-warning">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Wednesday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Wednesday"))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-warning">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Thursday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Thursday"))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-warning">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Friday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Friday"))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-warning">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Saturday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Saturday"))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-warning">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Sunday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Sunday"))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-warning">@booking.Time</a>
+            }
+      </td>
+    </tr>
+  </tbody>
+</table>
+}
+
+@if (!userIsGuide && !User.IsAdmin())
+{
+     ViewBag.Title = "My Bookings";
+
+    <h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
+
+ <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Day</th>
+      <th scope="col">Booking</th>     
+      <td scope="col"></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Monday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Monday" && b.UserId == userId))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-success">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Tuesday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Tuesday" && b.UserId == userId))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-success">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Wednesday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Wednesday" && b.UserId == userId))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-success">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Thursday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Thursday" && b.UserId == userId))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-success">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Friday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Friday" && b.UserId == userId))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-success">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Saturday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Saturday" && b.UserId == userId))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-success">@booking.Time</a>
+            }
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Sunday</th>
+      <td>
+          @foreach (var booking in Model.Bookings.Where(b => b.DayOfWeek == "Sunday" && b.UserId == userId))
+            {
+                <a asp-controller="Bookings" 
+                asp-action="AllBookings" 
+                asp-route-id="@booking.Id" class="btn btn-success">@booking.Time</a>
+            }
+      </td>
+    </tr>
+  </tbody>
+</table>
+}
+
+
+

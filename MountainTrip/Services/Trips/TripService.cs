@@ -51,7 +51,7 @@ namespace MountainTrip.Services.Trips
                 TripSorting.TripName or _ => tripsQuery.OrderByDescending(t => t.Id)
             };
 
-            var totalTrips = tripsQuery.Count();
+            int totalTrips = tripsQuery.Count();
 
             var trips = GetTrips(tripsQuery
                 .Skip((currentPage - 1) * tripsPerPage)
@@ -59,12 +59,13 @@ namespace MountainTrip.Services.Trips
 
             return new TripQueryServiceModel
             {
-                TotalTrips = totalTrips,
+                TotalTrips = totalTrips, //all of these have values
                 CurrentPage = currentPage,
                 TripsPerPage = tripsPerPage,
                 Trips = trips
             };
         }
+
         public IEnumerable<LatestTripServiceModel> Latest()
             => data.Trips
                 .Where(t => t.IsPublic)

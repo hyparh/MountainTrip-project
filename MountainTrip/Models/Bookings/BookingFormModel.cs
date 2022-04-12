@@ -1,4 +1,5 @@
 ﻿using MountainTrip.Data;
+using MountainTrip.Services.Bookings;
 using System.ComponentModel.DataAnnotations;
 
 namespace MountainTrip.Models.Bookings

@@ -18,20 +18,17 @@ namespace MountainTrip.Controllers
         private readonly ITripService trips;
         private readonly IGuideService guides;
         private readonly IMapper mapper;       
-        private readonly IBookingService bookings;
 
         public TripsController(
             MountainTripDbContext data,
             ITripService trips, 
             IGuideService guides, 
-            IMapper mapper,
-            IBookingService bookings)
+            IMapper mapper)
         {
             this.data = data;
             this.trips = trips;
             this.guides = guides;
             this.mapper = mapper;
-            this.bookings = bookings;
         }
      
         public IActionResult All([FromQuery] AllTripsQueryModel query)
@@ -215,7 +212,7 @@ namespace MountainTrip.Controllers
 
             trips.Delete(id);
 
-            return View("SuccessfulyDeleted");
+            return View("SuccessfullyDeleted");
         }        
     }
 }

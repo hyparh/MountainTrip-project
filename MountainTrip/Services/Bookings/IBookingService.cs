@@ -4,10 +4,11 @@ namespace MountainTrip.Services.Bookings
 {
     public interface IBookingService
     {
-        // TODO empty service here
+        BookingQueryServiceModel AllBookings(
+            string time = null, 
+            string dayOfWeek = null,
+            int peopleCount = 0);
 
         public int UserId(string userId);
-
-        public BookingServiceModel MyBookings(string time, byte peopleCount, string userId);
     }
 }

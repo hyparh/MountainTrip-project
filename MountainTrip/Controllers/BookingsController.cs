@@ -4,6 +4,7 @@ using MountainTrip.Data;
 using MountainTrip.Data.Models;
 using MountainTrip.Infrastructure;
 using MountainTrip.Models.Bookings;
+using MountainTrip.Services.Bookings;
 using MountainTrip.Services.Trips;
 using System.Globalization;
 using System.Linq;
@@ -13,9 +14,26 @@ namespace MountainTrip.Controllers
     public class BookingsController : Controller
     {
         private readonly MountainTripDbContext data;
-        
-        public BookingsController(MountainTripDbContext data)
-            => this.data = data;
+        private readonly IBookingService bookings;
+
+        public BookingsController(MountainTripDbContext data, IBookingService bookings)
+        {
+            this.data = data;
+            this.bookings = bookings;
+        }
+
+        public IActionResult AllBookings([FromQuery] AllBookingsQueryModel query)
+        {
+            var queryResult = bookings.AllBookings(
+                query.TripName,
+                query.Time,
+                query.PeopleCount);
+
+            query.TotalBookings = queryResult.TotalBookings;
+            query.Bookings = queryResult.Bookings; //this one is null here
+
+            return View(query);
+        }
 
         [Authorize]
         public IActionResult AddBooking()
@@ -66,14 +84,6 @@ namespace MountainTrip.Controllers
             data.SaveChanges();
 
             return RedirectToAction("All", "Trips");
-        }
-
-        [Authorize]
-        public IActionResult MyBookings(BookingFormModel query)
-        {
-            var trips = data.Bookings.Where(x => x.TripId == query.TripId);
-
-            return View(trips);
         }
     }
 }

@@ -48,50 +48,5 @@
 }
 else
 {
-ViewBag.Title = "Make your booking";
-
-<h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
-
- <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Day</th>
-      <th scope="col">Booking</th>     
-      <td scope="col"></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">Monday</th>
-      <td><a asp-area="" asp-controller="Trips" asp-action="Edit" asp-route-id="@Model.TripId" class="btn btn-warning ">09:00</a></td>
-      <td><a asp-area="" asp-controller="Trips" asp-action="Edit" asp-route-id="@Model.TripId" class="btn btn-warning ">11:00</a></td>
-    </tr>
-    <tr>
-      <th scope="row">Tuesday</th>
-      <td>Booking Button Here</td>
-    </tr>
-    <tr>
-      <th scope="row">Wednesday</th>
-      <td>Booking Button Here</td>
-    </tr>
-    <tr>
-      <th scope="row">Thursday</th>
-      <td>Booking Button Here</td>
-    </tr>
-    <tr>
-      <th scope="row">Friday</th>
-      <td>Booking Button Here</td>
-    </tr>
-    <tr>
-      <th scope="row">Saturday</th>
-      <td>Booking Button Here</td>
-    </tr>
-    <tr>
-      <th scope="row">Sunday</th>
-      <td>
-          <td><a asp-area="" asp-controller="Trips" asp-action="Edit" asp-route-id="@Model.TripId" class="btn btn-warning ">@Model.DayOfWeek</a></td>
-      </td>
-    </tr>
-  </tbody>
-</table>
+    Html.RenderPartial("UserMakesBooking");
 }

@@ -1,6 +1,36 @@
-﻿@{
-    ViewBag.Title = "Are you sure you";
+﻿@model BookingFormModel
+@inject IBookingService allBookings
+
+@{
+    ViewBag.Title = "Make your booking";
 }
 
 <h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-3 col-xl-2">
+
+        <form method="post">
+            <div class="mb-3">
+              <label asp-for="Time" class="form-label"></label>
+              <input asp-for="Time" class="form-control">
+              <span asp-validation-for="Time" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+              <label asp-for="PeopleCount" class="form-label"></label>
+              <input asp-for="PeopleCount" class="form-control">
+              <span asp-validation-for="PeopleCount" class="small text-danger"></span>    
+            </div> 
+            <div class="mb-3">
+              <label asp-for="DayOfWeek" class="form-label"></label>            
+              <select asp-for="DayOfWeek" class="form-control" asp-items="Html.GetEnumSelectList<DayOfWeek>()">                
+              </select>  
+            </div>
+            <div class="d-grid d-md-block mt-3">
+              <button class="btn btn-primary" type="submit">Save</button>                  
+            </div>               
+        </form>
+
+    </div>
+</div>
 

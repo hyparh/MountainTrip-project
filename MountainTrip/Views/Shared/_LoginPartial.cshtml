@@ -31,20 +31,20 @@
             </li>
         }
 
-        @if (User.Identity.IsAuthenticated && !userIsAdmin && !userIsGuide)
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="AllBookings">My Bookings</a>
-            </li>
-        }
-
         @if (userIsGuide || userIsAdmin)
         {
             <li class="nav-item">
                 <a  class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="AllBookings">All Bookings</a>
             </li>
         }
-        
+
+        @if (User.Identity.IsAuthenticated && !userIsGuide && !userIsAdmin)
+        {
+            <li class="nav-item">
+                <a  class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="AllBookings">Bookings</a>
+            </li>
+        }
+
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
     </li>    

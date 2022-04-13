@@ -3,8 +3,10 @@
     public class BookingServiceModel
     {       
         public int Id { get; init; }
-       
-        public string Time { get; set; }
+
+        public int TripId { get; set; }
+
+        public string Time { get; set; }    
 
         public string DayOfWeek { get; set; }
         

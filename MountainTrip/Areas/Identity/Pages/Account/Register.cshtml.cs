@@ -86,28 +86,5 @@ namespace MountainTrip.Areas.Identity.Pages.Account
 
             return Page();
         }
-
-        //private IdentityUser CreateUser()
-        //{
-        //    try
-        //    {
-        //        return Activator.CreateInstance<IdentityUser>();
-        //    }
-        //    catch
-        //    {
-        //        throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-        //            $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-        //            $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-        //    }
-        //}
-
-        //private IUserEmailStore<IdentityUser> GetEmailStore()
-        //{
-        //    if (!userManager.SupportsUserEmail)
-        //    {
-        //        throw new NotSupportedException("The default UI requires a user store with email support.");
-        //    }
-        //    return (IUserEmailStore<IdentityUser>)userStore;
-        //}
     }
 }

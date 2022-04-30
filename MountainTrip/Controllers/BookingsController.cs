@@ -30,7 +30,7 @@ namespace MountainTrip.Controllers
                 query.PeopleCount);
 
             query.TotalBookings = queryResult.TotalBookings;
-            query.Bookings = queryResult.Bookings; //this one is null here
+            query.Bookings = queryResult.Bookings;
 
             return View(query);
         }

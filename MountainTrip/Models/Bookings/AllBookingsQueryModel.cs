@@ -6,7 +6,7 @@ namespace MountainTrip.Models.Bookings
     {
         public string TripName { get; set; }
 
-        public int TripId { get; set; } // TODO new prop here
+        public int TripId { get; set; }
 
         public string Time { get; set; }
 

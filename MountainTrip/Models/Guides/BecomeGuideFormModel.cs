@@ -15,7 +15,6 @@ namespace MountainTrip.Services.Guides
         [Required]
         [StringLength(PhoneNumberMaxLength, MinimumLength = PhoneNumberMinLength)]
         [Display(Name = "Phone Number")]
-        // TODO may add regex validation here
         public string PhoneNumber { get; set; }
     }
 }

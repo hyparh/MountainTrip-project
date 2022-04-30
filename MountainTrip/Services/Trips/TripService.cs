@@ -59,7 +59,7 @@ namespace MountainTrip.Services.Trips
 
             return new TripQueryServiceModel
             {
-                TotalTrips = totalTrips, //all of these have values
+                TotalTrips = totalTrips,
                 CurrentPage = currentPage,
                 TripsPerPage = tripsPerPage,
                 Trips = trips

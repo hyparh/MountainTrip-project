@@ -7,7 +7,7 @@ namespace MountainTrip.Test.Controllers.Api
     public class StatisticsApiControllerTest
     {
         [Test]
-        public void GetStatisticsShouldReturnTotalStatisticks()
+        public void GetStatisticsShouldReturnTotalStatistics()
         {
             // Arrange
             var statisticsController = new StatisticsApiController(StatisticsServiceMock.Instance);

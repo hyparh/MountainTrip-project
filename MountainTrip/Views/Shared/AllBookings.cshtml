@@ -15,7 +15,11 @@
         userIsGuide = Guides.IsGuide(userId);
     }
 }
-@{    ViewBag.Title = "All Bookings";} 
+
+@{
+    ViewBag.Title = "All Bookings";
+}
+ 
  <h2 class="text-center mt-4 mb-4">@ViewBag.Title</h2>
 
  <table class="table">
@@ -35,7 +39,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-warning">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -47,7 +51,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-warning">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -59,7 +63,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-warning">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -71,7 +75,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-warning">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -83,7 +87,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings"              
                 asp-route-id="@booking.TripId" class="btn btn-warning">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>              
+                @booking.Time, @booking.PeopleCount people</a>              
             }
        </td>
      </tr>
@@ -95,7 +99,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-warning">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -107,7 +111,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-warning">Id @booking.TripId,
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -137,7 +141,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="/Trips/Details/@booking.TripId" class="btn btn-success">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -149,7 +153,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-success">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -161,7 +165,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-success">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -173,7 +177,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-success">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -185,7 +189,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-success">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -197,7 +201,7 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-success">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
@@ -209,23 +213,10 @@
                 <a asp-controller="Bookings" 
                 asp-action="AllBookings" 
                 asp-route-id="@booking.TripId" class="btn btn-success">Id @booking.TripId, 
-                @booking.Time, Id-@booking.TripId, @booking.PeopleCount people</a>
+                @booking.Time, @booking.PeopleCount people</a>
             }
        </td>
      </tr>
    </tbody>
  </table>
  }
-
- <form method="get">
-   <div class="mb-3">
-     <label asp-for="Time" class="form-label"></label>
-     <input asp-for="Time" class="form-control">
-     <span asp-validation-for="Time" class="small text-danger"></span>
-   </div>
-   <div class="d-grid d-md-block mt-3">
-     <button class="btn btn-primary" type="submit">Save</button>                  
-   </div> 
- </form>
-
- <a asp-controller="Trips" asp-action="Details" asp-route-id="@Model.TripId" class="btn btn-danger">Yaiks</a>

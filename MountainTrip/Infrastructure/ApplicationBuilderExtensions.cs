@@ -1,8 +1,8 @@
 ﻿using MountainTrip.Data;
 using MountainTrip.Data.Models;
+using MountainTrip.Areas.Admin;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using MountainTrip.Areas.Admin;
 
 namespace MountainTrip.Infrastructure
 {
